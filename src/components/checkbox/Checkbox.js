@@ -1,9 +1,7 @@
 import React from "react";
-import { useController } from "react-hook-form";
 import classNames from "utils/classNames";
 
 const Checkbox = ({
-  control,
   name = "",
   checked = false,
   onClick = () => {},
@@ -11,7 +9,6 @@ const Checkbox = ({
 }) => {
   const defaultClassName =
     "inline-flex items-center justify-center w-5 h-5 text-white border rounded cursor-pointer transition-all";
-  const { field } = useController({ control, name });
   return (
     <div className="flex items-start gap-x-5 mb-[25px]">
       <div
@@ -26,7 +23,7 @@ const Checkbox = ({
           name={name}
           className="hidden"
           onChange={() => {}}
-          checked={field.value}
+          checked={checked}
         />
         <span className={classNames(checked ? "" : "opacity-0 invisible")}>
           <svg

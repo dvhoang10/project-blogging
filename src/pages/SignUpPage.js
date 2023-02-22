@@ -23,11 +23,14 @@ const schema = yup.object({
     .string()
     .min(8, "Your password must be at least 8 characters")
     .required("Please enter your password"),
+  term: yup.bool().oneOf([true], "The terms and conditions must be accepted"),
 });
 
 const SignUpPage = () => {
   const {
     control,
+    watch,
+    setValue,
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm({
@@ -37,19 +40,17 @@ const SignUpPage = () => {
       fullname: "",
       email: "",
       password: "",
-      term: false,
+      terms: false,
     },
   });
   const { value: showPassword, handleToggleValue: handleTogglePassword } =
     useToggleValue();
-  const { value: acceptTerm, handleToggleValue: handleToggleTerm } =
-    useToggleValue();
+  const watchTerms = watch("terms");
   useEffect(() => {
     document.title = "Register";
   }, []);
   useEffect(() => {
     const arrErrors = Object.values(errors);
-    // console.log("🚀 ~ arrErrors:", arrErrors);
     if (arrErrors.length > 0) {
       toast.error(arrErrors[0]?.message, {
         pauseOnHover: false,
@@ -106,16 +107,20 @@ const SignUpPage = () => {
           </Input>
         </Field>
         <Checkbox
-          control={control}
           name="term"
-          checked={acceptTerm}
-          onClick={handleToggleTerm}
+          checked={watchTerms === true}
+          onClick={() => setValue("terms", !watchTerms)}
         >
           <p className="flex-1 text-xs lg:text-sm">
             I agree to the{" "}
-            <span className="underline text-primary">Term of Use</span> and have
-            read and understand the{" "}
-            <span className="underline text-primary">Privacy policy</span>.
+            <Link to="/" className="underline text-primary">
+              Term of Use
+            </Link>{" "}
+            and have read and understand the{" "}
+            <Link to="/" className="underline text-primary">
+              Privacy policy
+            </Link>
+            .
           </p>
         </Checkbox>
         <Button
