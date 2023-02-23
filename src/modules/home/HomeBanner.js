@@ -10,13 +10,18 @@ const HomeBanner = () => {
             <h1 className="mb-3 text-3xl font-bold lg:mb-5 lg:text-4xl">
               Blogging App
             </h1>
-            <p className="mb-6 leading-7 lg:mb-10">
+            <p className="mb-6 leading-7 lg:mb-10 lg:text-base">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
               eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
               enim ad minim veniam, quis nostrud exercitation ullamco laboris
               nisi.
             </p>
-            <Button type="button" to="/" className="w-[200px]" kind="white">
+            <Button
+              type="button"
+              to="/"
+              className="w-[120px] lg:w-[200px]"
+              kind="white"
+            >
               Get started
             </Button>
           </div>
