@@ -14,6 +14,7 @@ import { toast } from "react-toastify";
 import { Checkbox } from "components/checkbox";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "firebase-app/firebase-config";
+import { useAuth } from "contexts/auth-context";
 
 const schema = yup.object({
   email: yup
@@ -47,6 +48,15 @@ const SignInPage = () => {
   const { value: showPassword, handleToggleValue: handleTogglePassword } =
     useToggleValue();
   const watchRememberMe = watch("rememberMe");
+  useEffect(() => {
+    const arrErrors = Object.values(errors);
+    if (arrErrors.length > 0) {
+      toast.error(arrErrors[0]?.message, {
+        pauseOnHover: false,
+        delay: 0,
+      });
+    }
+  }, [errors]);
   const handleSignIn = async (values) => {
     if (!isValid) return;
     try {
@@ -58,23 +68,18 @@ const SignInPage = () => {
       });
       navigate("/");
     } catch (error) {
-      if (error.message.includes("wrong-password"))
-        toast.error("It seems your password was wrong");
-      // toast.error("Login unsuccessful!");
+      // if (error.message.includes("wrong-password"))
+      //   toast.error("It seems your password was wrong");
+      toast.error("Login unsuccessful!");
     }
   };
+  const { userInfo } = useAuth();
   useEffect(() => {
     document.title = "Login";
-  }, []);
-  useEffect(() => {
-    const arrErrors = Object.values(errors);
-    if (arrErrors.length > 0) {
-      toast.error(arrErrors[0]?.message, {
-        pauseOnHover: false,
-        delay: 0,
-      });
-    }
-  }, [errors]);
+    if (userInfo?.email) navigate("/");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userInfo]);
+
   return (
     <div>
       <LayoutAuthentication>

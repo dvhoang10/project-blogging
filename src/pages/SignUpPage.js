@@ -12,7 +12,7 @@ import { toast } from "react-toastify";
 import { Link, useNavigate } from "react-router-dom";
 import LayoutAuthentication from "layouts/LayoutAuthentication";
 import { Checkbox } from "components/checkbox";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { doc, serverTimestamp, setDoc } from "firebase/firestore";
 import slugify from "slugify";
 import { userRole, userStatus } from "utils/constant";
@@ -69,6 +69,9 @@ const SignUpPage = () => {
     if (!isValid) return;
     try {
       await createUserWithEmailAndPassword(auth, values.email, values.password);
+      await updateProfile(auth.currentUser, {
+        displayName: values.fullname,
+      });
       await setDoc(doc(db, "users", auth.currentUser.uid), {
         fullname: values.fullname,
         username: slugify(values.fullname, { lower: true }),

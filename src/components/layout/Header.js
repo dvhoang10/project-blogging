@@ -1,4 +1,5 @@
 import Button from "components/button/Button";
+import { useAuth } from "contexts/auth-context";
 import React from "react";
 import { Link, NavLink } from "react-router-dom";
 
@@ -16,8 +17,13 @@ const menuLinks = [
     title: "Contact",
   },
 ];
-
+function getLastName(name) {
+  if (!name) return "User";
+  const length = name.split(" ").length;
+  return name.split(" ")[length - 1];
+}
 const Header = () => {
+  const { userInfo } = useAuth();
   return (
     <div className="py-5">
       <div className="layout-container">
@@ -36,14 +42,33 @@ const Header = () => {
               ))}
             </ul>
           </div>
-          <Button
-            type="button"
-            to="/login"
-            kind="secondary"
-            className="w-full max-w-[200px]"
-          >
-            Login
-          </Button>
+          {!userInfo ? (
+            <Button
+              type="button"
+              to="/login"
+              kind="secondary"
+              className="w-full max-w-[200px]"
+            >
+              Login
+            </Button>
+          ) : (
+            <div className="flex items-center justify-end flex-1 gap-x-5">
+              <div className="text-base">
+                <span>Welcome back, </span>
+                <strong className="text-primary">
+                  {getLastName(userInfo?.displayName)}
+                </strong>
+              </div>
+              <Button
+                type="button"
+                to="/dashboard"
+                kind="secondary"
+                className="w-full max-w-[200px]"
+              >
+                Dashboard
+              </Button>
+            </div>
+          )}
         </div>
       </div>
     </div>
