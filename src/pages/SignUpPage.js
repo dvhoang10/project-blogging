@@ -9,9 +9,14 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { toast } from "react-toastify";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import LayoutAuthentication from "layouts/LayoutAuthentication";
 import { Checkbox } from "components/checkbox";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { doc, serverTimestamp, setDoc } from "firebase/firestore";
+import slugify from "slugify";
+import { userRole, userStatus } from "utils/constant";
+import { auth, db } from "firebase-app/firebase-config";
 
 const schema = yup.object({
   fullname: yup.string().required("Please enter your fullname"),
@@ -27,12 +32,14 @@ const schema = yup.object({
 });
 
 const SignUpPage = () => {
+  const navigate = useNavigate();
   const {
     control,
     watch,
     setValue,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    reset,
+    formState: { errors, isSubmitting, isValid },
   } = useForm({
     mode: "onChange",
     resolver: yupResolver(schema),
@@ -58,8 +65,32 @@ const SignUpPage = () => {
       });
     }
   }, [errors]);
-  const handleSignUp = (values) => {
-    console.log("🚀 ~ values:", values);
+  const handleSignUp = async (values) => {
+    if (!isValid) return;
+    try {
+      await createUserWithEmailAndPassword(auth, values.email, values.password);
+      await setDoc(doc(db, "users", auth.currentUser.uid), {
+        fullname: values.fullname,
+        username: slugify(values.fullname, { lower: true }),
+        email: values.email,
+        password: values.password,
+        avatar:
+          "https://www.google.com/url?sa=i&url=https%3A%2F%2Ficon-icons.com%2Ficon%2Favatar-default-user%2F92824&psig=AOvVaw0GtSabIypwDftTYhqKDwIF&ust=1677199456772000&source=images&cd=vfe&ved=0CBAQjRxqFwoTCJDRmIG1qv0CFQAAAAAdAAAAABAd",
+        status: userStatus.ACTIVE,
+        role: userRole.USER,
+        createdAt: serverTimestamp(),
+      });
+      toast.success("Register successfully!!!");
+      reset({
+        fullname: "",
+        email: "",
+        password: "",
+        terms: false,
+      });
+      navigate("/");
+    } catch {
+      toast.error("Account already exists!!!");
+    }
   };
 
   return (

@@ -9,7 +9,7 @@ const LayoutAuthentication = ({ children }) => {
           <img srcSet="/logo.png" alt="logo" />
         </Link>
       </div>
-      <h1 className="text-[30px] lg:text-[40px] text-blue00 text-center font-semibold mb-[25px]">
+      <h1 className="text-[30px] lg:text-[40px] text-accent text-center font-semibold mb-[25px]">
         Blogging App
       </h1>
       {children}

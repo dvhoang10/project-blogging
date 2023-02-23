@@ -6,8 +6,17 @@ module.exports = {
       colors: {
         primary: "#1DC071",
         secondary: "#A4D96C",
-        blue00: "#00A7B4",
+        grayDark: "#292D32",
+        grayLight: "#E7ECF3",
+        tertiary: "#3A1097",
+        accent: "#00D1ED",
+        grayF3: "#F3EDFF",
+        gray6B: "#6B6B6B",
+        gray23: "#232323",
+        gray4b: "#4B5264",
         grayf1: "#F1F1F3",
+        gray80: "#808191",
+        black: "#171725",
       },
       backgroundImage: {
         btPrimary: "linear-gradient(107.61deg, #00A7B4 15.59%, #A4D96C 87.25%)",
