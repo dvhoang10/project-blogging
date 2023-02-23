@@ -80,7 +80,7 @@ const SignUpPage = () => {
         role: userRole.USER,
         createdAt: serverTimestamp(),
       });
-      toast.success("Register successfully!!!");
+      toast.success("Register successful!");
       reset({
         fullname: "",
         email: "",
@@ -89,7 +89,7 @@ const SignUpPage = () => {
       });
       navigate("/");
     } catch {
-      toast.error("Account already exists!!!");
+      toast.error("Account already exists!");
     }
   };
 
@@ -101,7 +101,7 @@ const SignUpPage = () => {
       >
         <div className="text-sm lg:text-base text-center font-normal mb-[30px] lg:mb-[25px]">
           You already have an account?{" "}
-          <Link to="/" className="font-medium text-primary">
+          <Link to="/login" className="font-medium underline text-primary">
             Login
           </Link>
         </div>
@@ -141,14 +141,17 @@ const SignUpPage = () => {
           name="term"
           checked={watchTerms === true}
           onClick={() => setValue("terms", !watchTerms)}
+          className="mb-[30px] lg:mb-[25px]"
         >
           <p className="flex-1 text-xs lg:text-sm">
-            I agree to the{" "}
-            <Link to="/" className="underline text-primary">
+            <span className="cursor-pointer">I agree to the </span>
+            <Link to="/" className="inline-block underline text-primary">
               Term of Use
             </Link>{" "}
-            and have read and understand the{" "}
-            <Link to="/" className="underline text-primary">
+            <span className="lg:cursor-pointer">
+              and have read and understand the{" "}
+            </span>
+            <Link to="/" className="inline-block underline text-primary">
               Privacy policy
             </Link>
             .

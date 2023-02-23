@@ -5,12 +5,15 @@ const Checkbox = ({
   name = "",
   checked = false,
   onClick = () => {},
+  className = "",
   children,
 }) => {
   const defaultClassName =
-    "inline-flex items-center justify-center w-5 h-5 text-white border rounded cursor-pointer transition-all";
+    "inline-flex flex-shrink-0 items-center justify-center w-5 h-5 text-white border rounded cursor-pointer transition-all";
   return (
-    <div className="flex items-start gap-x-5 mb-[25px]">
+    <div
+      className={classNames("flex items-center gap-x-3 lg:gap-x-5", className)}
+    >
       <div
         className={classNames(
           defaultClassName,
@@ -40,11 +43,7 @@ const Checkbox = ({
           </svg>
         </span>
       </div>
-      {children && (
-        <div onClick={onClick} className="cursor-pointer">
-          {children}
-        </div>
-      )}
+      {children && <div onClick={onClick}>{children}</div>}
     </div>
   );
 };
