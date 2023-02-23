@@ -9,9 +9,11 @@ import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { Checkbox } from "components/checkbox";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "firebase-app/firebase-config";
 
 const schema = yup.object({
   email: yup
@@ -25,6 +27,7 @@ const schema = yup.object({
 });
 
 const SignInPage = () => {
+  const navigate = useNavigate();
   const {
     control,
     handleSubmit,
@@ -44,16 +47,20 @@ const SignInPage = () => {
   const { value: showPassword, handleToggleValue: handleTogglePassword } =
     useToggleValue();
   const watchRememberMe = watch("rememberMe");
-  const handleSignIn = (values) => {
+  const handleSignIn = async (values) => {
     if (!isValid) return;
     try {
+      await signInWithEmailAndPassword(auth, values.email, values.password);
       toast.success("Login successful!");
       reset({
         email: "",
         password: "",
       });
-    } catch {
-      toast.error("Login unsuccessful!");
+      navigate("/");
+    } catch (error) {
+      if (error.message.includes("wrong-password"))
+        toast.error("It seems your password was wrong");
+      // toast.error("Login unsuccessful!");
     }
   };
   useEffect(() => {
