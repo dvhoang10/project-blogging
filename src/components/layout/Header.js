@@ -32,7 +32,7 @@ const Header = () => {
             <Link to="/">
               <img srcSet="./logo-header.png" alt="logo" />
             </Link>
-            <ul className="flex items-center text-lg font-medium list-none gap-x-10">
+            <ul className="items-center hidden text-lg font-medium list-none lg:flex gap-x-10">
               {menuLinks.map((item) => (
                 <li key={item.title}>
                   <NavLink to={item.url} className="menu-link">
@@ -47,13 +47,13 @@ const Header = () => {
               type="button"
               to="/login"
               kind="secondary"
-              className="w-full max-w-[200px]"
+              className="w-[150px] lg:w-[200px]"
             >
               Login
             </Button>
           ) : (
             <div className="flex items-center justify-end flex-1 gap-x-5">
-              <div className="text-base">
+              <div className="hidden text-base lg:block">
                 <span>Welcome back, </span>
                 <strong className="text-primary">
                   {getLastName(userInfo?.displayName)}
@@ -63,7 +63,7 @@ const Header = () => {
                 type="button"
                 to="/dashboard"
                 kind="secondary"
-                className="w-full max-w-[200px]"
+                className="w-[150px] lg:w-[200px]"
               >
                 Dashboard
               </Button>

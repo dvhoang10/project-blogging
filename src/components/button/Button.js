@@ -15,13 +15,16 @@ const Button = ({
   ...rest
 }) => {
   let defaultClassName =
-    "flex items-center justify-center h-[60px] font-semibold text-base rounded-lg text-white";
+    "flex items-center justify-center h-12 lg:h-[60px] font-semibold text-base rounded-lg";
   switch (kind) {
     case "primary":
-      defaultClassName += " bg-btPrimary";
+      defaultClassName += " bg-btPrimary text-white";
       break;
     case "secondary":
-      defaultClassName += " bg-primary";
+      defaultClassName += " bg-primary text-white";
+      break;
+    case "white":
+      defaultClassName += " bg-white text-primary";
       break;
     default:
       break;
@@ -53,7 +56,7 @@ Button.prototype = {
   type: PropTypes.oneOf(["button", "submit"]),
   className: PropTypes.string,
   children: PropTypes.node,
-  kind: PropTypes.oneOf(["primary", "secondary"]),
+  kind: PropTypes.oneOf(["primary", "secondary", "white"]),
   isLoading: PropTypes.bool,
 };
 

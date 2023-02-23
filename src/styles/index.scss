@@ -7,7 +7,7 @@
   body {
     line-height: 1.5;
     font-family: "Epilogue", sans-serif;
-    font-size: 14px;
+    font-size: 16px;
     color: #232323;
   }
 }
@@ -15,7 +15,7 @@
 @layer components {
   .layout-container {
     width: 100%;
-    max-width: 1000px;
+    max-width: 1260px;
     margin: 0 auto;
     padding: 0 20px;
   }

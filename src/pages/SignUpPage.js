@@ -166,7 +166,7 @@ const SignUpPage = () => {
           kind="primary"
           isLoading={isSubmitting}
         >
-          Sign Up
+          Register
         </Button>
       </form>
     </LayoutAuthentication>
