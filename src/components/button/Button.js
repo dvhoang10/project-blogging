@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import { withErrorBoundary } from "react-error-boundary";
 import ErrorComponent from "components/common/ErrorComponent";
 import { LoadingSpinner } from "components/loading";
+import { Link } from "react-router-dom";
 
 const Button = ({
   type = "submit",
@@ -14,15 +15,25 @@ const Button = ({
   ...rest
 }) => {
   let defaultClassName =
-    "flex items-center justify-center min-h-[66px] font-semibold text-base rounded-lg";
+    "flex items-center justify-center h-[60px] font-semibold text-base rounded-lg text-white";
   switch (kind) {
     case "primary":
-      defaultClassName += " bg-btPrimary text-white";
+      defaultClassName += " bg-btPrimary";
+      break;
+    case "secondary":
+      defaultClassName += " bg-primary";
       break;
     default:
       break;
   }
   const child = !!isLoading ? <LoadingSpinner></LoadingSpinner> : children;
+  if (rest.to) {
+    return (
+      <Link to={rest.to} className={classNames(defaultClassName, className)}>
+        {child}
+      </Link>
+    );
+  }
   return (
     <button
       type={type}
@@ -39,7 +50,7 @@ const Button = ({
 };
 
 Button.prototype = {
-  type: PropTypes.string,
+  type: PropTypes.oneOf(["button", "submit"]),
   className: PropTypes.string,
   children: PropTypes.node,
   kind: PropTypes.oneOf(["primary", "secondary"]),
