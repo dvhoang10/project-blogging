@@ -32,7 +32,9 @@ const PostFeatureItem = ({ data }) => {
             to={slugify(user?.username || "", { lower: true })}
           ></PostMeta>
         </div>
-        <PostTitle to={data.slug}>{data.title}</PostTitle>
+        <PostTitle to={data.slug} size="large">
+          {data.title}
+        </PostTitle>
       </div>
     </div>
   );

@@ -9,7 +9,7 @@ const PostMeta = ({ date = "", authorName = "", className = "", to = "" }) => {
   return (
     <div
       className={classNames(
-        "flex items-center gap-x-[6px] lg:gap-x-3 font-semibold",
+        "flex items-center gap-x-[6px] lg:gap-x-3 font-semibold lg:text-sm text-xs",
         className
       )}
     >
