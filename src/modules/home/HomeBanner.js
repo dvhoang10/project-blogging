@@ -1,5 +1,7 @@
 import Button from "components/button/Button";
+import ErrorComponent from "components/common/ErrorComponent";
 import React from "react";
+import { withErrorBoundary } from "react-error-boundary";
 
 const HomeBanner = () => {
   return (
@@ -34,4 +36,6 @@ const HomeBanner = () => {
   );
 };
 
-export default HomeBanner;
+export default withErrorBoundary(HomeBanner, {
+  FallbackComponent: ErrorComponent,
+});

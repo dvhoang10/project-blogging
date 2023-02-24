@@ -1,6 +1,8 @@
 import Button from "components/button/Button";
+import ErrorComponent from "components/common/ErrorComponent";
 import { useAuth } from "contexts/auth-context";
 import React from "react";
+import { withErrorBoundary } from "react-error-boundary";
 import { Link, NavLink } from "react-router-dom";
 
 const menuLinks = [
@@ -75,4 +77,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default withErrorBoundary(Header, { FallbackComponent: ErrorComponent });
