@@ -1,12 +1,14 @@
 import Button from "components/button/Button";
 import { Radio } from "components/checkbox";
 import ErrorComponent from "components/common/ErrorComponent";
+import { Dropdown } from "components/dropdown";
 import Field from "components/field/Field";
 import FieldCheckboxes from "components/field/FieldCheckboxes";
 import Input from "components/input/Input";
 import Label from "components/label/Label";
 import { Toggle } from "components/toggle";
 import DashboardHeading from "modules/Dashboard/DashboardHeading";
+import FormLayout from "modules/Dashboard/FormLayout";
 import React, { useEffect } from "react";
 import { withErrorBoundary } from "react-error-boundary";
 import { useForm } from "react-hook-form";
@@ -20,6 +22,7 @@ const PostAddNew = () => {
       slug: "",
       status: 2,
       hot: false,
+      category: "",
     },
   });
   const watchStatus = watch("status");
@@ -34,7 +37,7 @@ const PostAddNew = () => {
     <div>
       <DashboardHeading title="Add new post"></DashboardHeading>
       <form onSubmit={handleSubmit(addPostHandler)}>
-        <div className="grid grid-cols-2 mb-10 gap-x-10">
+        <FormLayout>
           <Field>
             <Label htmlFor="title">Title</Label>
             <Input
@@ -51,8 +54,20 @@ const PostAddNew = () => {
               placeholder="Enter the slug of post"
             ></Input>
           </Field>
-        </div>
-        <div className="grid grid-cols-2 mb-10 gap-x-10">
+        </FormLayout>
+        <FormLayout>
+          <Field>
+            <Label>Category</Label>
+            <Dropdown>
+              <Dropdown.Select placeholder="Select the category"></Dropdown.Select>
+              <Dropdown.List>
+                <Dropdown.Option>Knowledge</Dropdown.Option>
+                <Dropdown.Option>Blockchain</Dropdown.Option>
+              </Dropdown.List>
+            </Dropdown>
+          </Field>
+        </FormLayout>
+        <FormLayout>
           <Field>
             <Label>Feature post</Label>
             <Toggle
@@ -89,7 +104,7 @@ const PostAddNew = () => {
               </Radio>
             </FieldCheckboxes>
           </Field>
-        </div>
+        </FormLayout>
         <Button
           type="submit"
           className="mx-auto w-[250px] h-12 lg:h-[60px]"

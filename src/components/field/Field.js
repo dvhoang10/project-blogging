@@ -5,7 +5,7 @@ import { withErrorBoundary } from "react-error-boundary";
 import ErrorComponent from "components/common/ErrorComponent";
 
 const Field = ({ children, className = "" }) => {
-  let defaultClassName = "flex flex-col items-start gap-y-5 mb-[25px]";
+  let defaultClassName = "flex flex-col items-start gap-y-5";
   return (
     <div className={classNames(defaultClassName, className)}>{children}</div>
   );
