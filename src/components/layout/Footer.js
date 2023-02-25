@@ -8,7 +8,7 @@ const Footer = () => {
           <div>
             <div class="flex items-center gap-x-5">
               <img src="./logo-header.png" alt="" className="mb-[17px]" />
-              <h3 className="text-xl font-semibold text-primary">
+              <h3 className="text-2xl font-semibold text-primary">
                 Blogging App
               </h3>
             </div>
@@ -16,7 +16,9 @@ const Footer = () => {
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempore
               quibusdam veritatis accusantium molestiae, laboriosam modi.
             </div>
-            <div>©BloggingApp 2023. All rights reserved</div>
+            <div className="font-semibold">
+              ©BloggingApp 2023. All rights reserved
+            </div>
           </div>
           <div>
             <h3 class="mb-8 text-lg font-semibold">Company</h3>

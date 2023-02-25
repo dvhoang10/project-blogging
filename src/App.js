@@ -1,5 +1,6 @@
 import { AuthProvider } from "contexts/auth-context";
 import HomeLayout from "modules/home/HomeLayout";
+import PageNotFound from "pages/PageNotFound";
 import React, { Suspense } from "react";
 import { Route, Routes } from "react-router-dom";
 const HomePage = React.lazy(() => import("pages/HomePage"));
@@ -17,6 +18,7 @@ function App() {
             </Route>
             <Route path="/register" element={<SignUpPage></SignUpPage>}></Route>
             <Route path="/login" element={<SignInPage></SignInPage>}></Route>
+            <Route path="*" element={<PageNotFound></PageNotFound>}></Route>
           </Routes>
         </Suspense>
       </AuthProvider>
