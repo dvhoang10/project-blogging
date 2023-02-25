@@ -1,14 +1,20 @@
 import { AuthProvider } from "contexts/auth-context";
-import DashBoardLayout from "modules/DashBoard/DashBoardLayout";
-import DashBoardPage from "modules/DashBoard/DashBoardPage";
-import HomeLayout from "modules/home/HomeLayout";
-import PostDetailsPage from "modules/post/PostDetailsPage";
-import PageNotFound from "pages/PageNotFound";
+
 import React, { Suspense } from "react";
 import { Route, Routes } from "react-router-dom";
 const HomePage = React.lazy(() => import("pages/HomePage"));
 const SignUpPage = React.lazy(() => import("pages/SignUpPage"));
 const SignInPage = React.lazy(() => import("pages/SignInPage"));
+
+const HomeLayout = React.lazy(() => import("modules/home/HomeLayout"));
+const PostDetailsPage = React.lazy(() =>
+  import("modules/post/PostDetailsPage")
+);
+const PageNotFound = React.lazy(() => import("pages/PageNotFound"));
+const DashboardPage = React.lazy(() => import("pages/DashboardPage"));
+const DashboardLayout = React.lazy(() =>
+  import("modules/Dashboard/DashboardLayout")
+);
 
 function App() {
   return (
@@ -26,10 +32,10 @@ function App() {
             <Route path="/register" element={<SignUpPage></SignUpPage>}></Route>
             <Route path="/login" element={<SignInPage></SignInPage>}></Route>
             <Route path="*" element={<PageNotFound></PageNotFound>}></Route>
-            <Route element={<DashBoardLayout></DashBoardLayout>}>
+            <Route element={<DashboardLayout></DashboardLayout>}>
               <Route
                 path="/dashboard"
-                element={<DashBoardPage></DashBoardPage>}
+                element={<DashboardPage></DashboardPage>}
               ></Route>
             </Route>
           </Routes>

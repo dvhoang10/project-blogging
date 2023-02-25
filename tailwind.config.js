@@ -25,6 +25,10 @@ module.exports = {
       },
       gridTemplateColumns: {
         footer: "3fr 1fr 1fr 1fr",
+        dashBoardMain: "300px minmax(0,1fr)",
+      },
+      boxShadow: {
+        sideBar: "10px 10px 20px rgba(218, 213, 213, 0.15)",
       },
     },
   },
