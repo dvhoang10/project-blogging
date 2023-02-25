@@ -19,7 +19,7 @@ const PageNotFound = () => {
             Chances are your spelled something wrong, so can you double check
             the URL?
           </p>
-          <Button to="/" className="max-w-[200px] mx-auto">
+          <Button to="/" className="max-w-[200px] mx-auto h-12 lg:h-[60px]">
             Go back
           </Button>
         </div>

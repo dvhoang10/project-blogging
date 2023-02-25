@@ -162,7 +162,7 @@ const SignUpPage = () => {
         </Checkbox>
         <Button
           type="submit"
-          className="w-full mx-auto max-w-[300px]"
+          className="w-full mx-auto max-w-[300px] h-12 lg:h-[60px]"
           kind="primary"
           isLoading={isSubmitting}
         >

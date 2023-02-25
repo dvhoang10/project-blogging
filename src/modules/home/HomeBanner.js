@@ -21,7 +21,7 @@ const HomeBanner = () => {
             <Button
               type="button"
               to="/"
-              className="w-[120px] lg:w-[200px]"
+              className="w-[120px] lg:w-[200px] h-12 lg:h-[60px]"
               kind="white"
             >
               Get started

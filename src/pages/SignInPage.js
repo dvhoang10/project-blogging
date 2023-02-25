@@ -134,7 +134,7 @@ const SignInPage = () => {
           </div>
           <Button
             type="submit"
-            className="w-full max-w-[300px] mx-auto"
+            className="w-full max-w-[300px] mx-auto h-12 lg:h-[60px]"
             kind="primary"
             isLoading={isSubmitting}
           >

@@ -49,7 +49,7 @@ const Header = () => {
               type="button"
               to="/login"
               kind="secondary"
-              className="w-[150px] lg:w-[200px]"
+              className="w-[150px] lg:w-[200px] h-12 lg:h-[60px]"
             >
               Login
             </Button>
@@ -65,7 +65,7 @@ const Header = () => {
                 type="button"
                 to="/dashboard"
                 kind="secondary"
-                className="w-[150px] lg:w-[200px]"
+                className="w-[150px] lg:w-[200px] h-12 lg:h-[60px]"
               >
                 Dashboard
               </Button>

@@ -1,4 +1,6 @@
 import { AuthProvider } from "contexts/auth-context";
+import DashBoardLayout from "modules/DashBoard/DashBoardLayout";
+import DashBoardPage from "modules/DashBoard/DashBoardPage";
 import HomeLayout from "modules/home/HomeLayout";
 import PostDetailsPage from "modules/post/PostDetailsPage";
 import PageNotFound from "pages/PageNotFound";
@@ -24,6 +26,12 @@ function App() {
             <Route path="/register" element={<SignUpPage></SignUpPage>}></Route>
             <Route path="/login" element={<SignInPage></SignInPage>}></Route>
             <Route path="*" element={<PageNotFound></PageNotFound>}></Route>
+            <Route element={<DashBoardLayout></DashBoardLayout>}>
+              <Route
+                path="/dashboard"
+                element={<DashBoardPage></DashBoardPage>}
+              ></Route>
+            </Route>
           </Routes>
         </Suspense>
       </AuthProvider>
