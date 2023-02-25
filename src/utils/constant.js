@@ -9,3 +9,9 @@ export const userRole = {
   MOD: 2,
   USER: 3,
 };
+
+export const postStatus = {
+  APPROVED: 1,
+  PENDING: 2,
+  REJECTED: 3,
+};

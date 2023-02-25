@@ -1,11 +1,9 @@
 import { AuthProvider } from "contexts/auth-context";
-
 import React, { Suspense } from "react";
 import { Route, Routes } from "react-router-dom";
 const HomePage = React.lazy(() => import("pages/HomePage"));
 const SignUpPage = React.lazy(() => import("pages/SignUpPage"));
 const SignInPage = React.lazy(() => import("pages/SignInPage"));
-
 const HomeLayout = React.lazy(() => import("modules/home/HomeLayout"));
 const PostDetailsPage = React.lazy(() =>
   import("modules/post/PostDetailsPage")
@@ -15,6 +13,7 @@ const DashboardPage = React.lazy(() => import("pages/DashboardPage"));
 const DashboardLayout = React.lazy(() =>
   import("modules/Dashboard/DashboardLayout")
 );
+const PostAddNew = React.lazy(() => import("modules/post/PostAddNew"));
 
 function App() {
   return (
@@ -36,6 +35,10 @@ function App() {
               <Route
                 path="/dashboard"
                 element={<DashboardPage></DashboardPage>}
+              ></Route>
+              <Route
+                path="/manage/add-post"
+                element={<PostAddNew></PostAddNew>}
               ></Route>
             </Route>
           </Routes>

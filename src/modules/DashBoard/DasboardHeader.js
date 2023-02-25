@@ -16,7 +16,11 @@ const DashboardHeader = () => {
         </span>
       </Link>
       <div className="flex items-center gap-5">
-        <Button to="#" className="p-5 h-12 lg:h-[52px]" kind="secondary">
+        <Button
+          to="/manage/add-post"
+          className="p-5 h-12 lg:h-[52px]"
+          kind="secondary"
+        >
           Write a new post
         </Button>
         <Link to="#" className="w-[52px] h-[52px]">
