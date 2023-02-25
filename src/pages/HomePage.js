@@ -7,11 +7,9 @@ import React from "react";
 const HomePage = () => {
   return (
     <div>
-      <Layout>
-        <HomeBanner></HomeBanner>
-        <HomeFeature></HomeFeature>
-        <HomeLatest></HomeLatest>
-      </Layout>
+      <HomeBanner></HomeBanner>
+      <HomeFeature></HomeFeature>
+      <HomeLatest></HomeLatest>
     </div>
   );
 };

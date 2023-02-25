@@ -23,6 +23,9 @@ module.exports = {
         btPrimary: "linear-gradient(107.61deg, #00A7B4 15.59%, #A4D96C 87.25%)",
         homeBanner: "linear-gradient(155deg, #00B4AA 6.67%, #A4D96C 84.1%)",
       },
+      gridTemplateColumns: {
+        footer: "3fr 1fr 1fr 1fr",
+      },
     },
   },
   plugins: [],

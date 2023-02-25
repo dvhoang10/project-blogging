@@ -1,15 +1,16 @@
 import Footer from "components/layout/Footer";
 import Header from "components/layout/Header";
 import React from "react";
+import { Outlet } from "react-router-dom";
 
-const Layout = ({ children }) => {
+const HomeLayout = () => {
   return (
-    <div>
+    <>
       <Header></Header>
-      {children}
+      <Outlet></Outlet>
       <Footer></Footer>
-    </div>
+    </>
   );
 };
 
-export default Layout;
+export default HomeLayout;
