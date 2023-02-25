@@ -4,6 +4,9 @@ import PostCategory from "./PostCategory";
 import PostImage from "./PostImage";
 import PostMeta from "./PostMeta";
 import PostTitle from "./PostTitle";
+import Proptypes from "prop-types";
+import { withErrorBoundary } from "react-error-boundary";
+import ErrorComponent from "components/common/ErrorComponent";
 
 const PostLatestItem = ({ data }) => {
   if (!data.id) return null;
@@ -40,4 +43,10 @@ const PostLatestItem = ({ data }) => {
   );
 };
 
-export default PostLatestItem;
+PostLatestItem.prototype = {
+  data: Proptypes.object,
+};
+
+export default withErrorBoundary(PostLatestItem, {
+  FallbackComponent: ErrorComponent,
+});
