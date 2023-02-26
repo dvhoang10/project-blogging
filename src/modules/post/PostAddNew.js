@@ -19,6 +19,15 @@ import { toast } from "react-toastify";
 import slugify from "slugify";
 import ImageUpload from "components/image/ImageUpload";
 import useFirebaseImage from "hooks/useFirebaseImage";
+import {
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  query,
+  where,
+} from "firebase/firestore";
+import { db } from "firebase-app/firebase-config";
 
 const schema = yup.object({
   title: yup.string().required("Please enter your title"),
@@ -42,7 +51,7 @@ const PostAddNew = () => {
       slug: "",
       status: 2,
       hot: false,
-      category: "",
+      category: {},
     },
     resolver: yupResolver(schema),
   });
@@ -50,6 +59,33 @@ const PostAddNew = () => {
   const watchHot = watch("hot");
   const { image, progress, handleSelectImage, handleDeleteImage } =
     useFirebaseImage(setValue, getValues);
+  const [categories, setCategories] = useState([]);
+  const [selectCategory, setSelectCategory] = useState("");
+  useEffect(() => {
+    async function getData() {
+      const colRef = collection(db, "categories");
+      const q = query(colRef, where("status", "==", 1));
+      const querySnapshot = await getDocs(q);
+      let result = [];
+      querySnapshot.forEach((doc) => {
+        result.push({
+          id: doc.id,
+          ...doc.data(),
+        });
+      });
+      setCategories(result);
+    }
+    getData();
+  }, []);
+  const handleClickOption = async (item) => {
+    const colRef = doc(db, "categories", item.id);
+    const docData = await getDoc(colRef);
+    setValue("category", {
+      id: docData.id,
+      ...docData.data(),
+    });
+    setSelectCategory(item);
+  };
   useEffect(() => {
     const arrErrors = Object.values(errors);
     if (arrErrors.length > 0) {
@@ -63,6 +99,7 @@ const PostAddNew = () => {
     const cloneValues = { ...values };
     cloneValues.slug = slugify(values.slug || values.title, { lower: true });
     cloneValues.status = Number(values.status);
+    console.log("🚀 ~ cloneValues:", cloneValues);
   };
   return (
     <div>
@@ -102,10 +139,22 @@ const PostAddNew = () => {
             <Dropdown>
               <Dropdown.Select placeholder="Select the category"></Dropdown.Select>
               <Dropdown.List>
-                <Dropdown.Option>Knowledge</Dropdown.Option>
-                <Dropdown.Option>Blockchain</Dropdown.Option>
+                {categories.length > 0 &&
+                  categories.map((item) => (
+                    <Dropdown.Option
+                      key={item.id}
+                      onClick={() => handleClickOption(item)}
+                    >
+                      {item.name}
+                    </Dropdown.Option>
+                  ))}
               </Dropdown.List>
             </Dropdown>
+            {selectCategory?.name && (
+              <span className="inline-block p-3 text-sm font-medium text-green-600 rounded-lg bg-green-50">
+                {selectCategory?.name}
+              </span>
+            )}
           </Field>
         </FormLayout>
         <FormLayout>

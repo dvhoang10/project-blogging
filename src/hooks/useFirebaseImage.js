@@ -5,7 +5,7 @@ import {
   getDownloadURL,
   deleteObject,
 } from "firebase/storage";
-import React, { useState } from "react";
+import { useState } from "react";
 import { toast } from "react-toastify";
 
 export default function useFirebaseImage(setValue, getValues) {
