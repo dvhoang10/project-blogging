@@ -9,7 +9,7 @@ import Label from "components/label/Label";
 import { Toggle } from "components/toggle";
 import DashboardHeading from "modules/Dashboard/DashboardHeading";
 import FormLayout from "modules/Dashboard/FormLayout";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { withErrorBoundary } from "react-error-boundary";
 import { useForm } from "react-hook-form";
 import { postStatus } from "utils/constant";
@@ -17,16 +17,27 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { toast } from "react-toastify";
 import slugify from "slugify";
+import ImageUpload from "components/image/ImageUpload";
+import {
+  getStorage,
+  ref,
+  uploadBytesResumable,
+  getDownloadURL,
+} from "firebase/storage";
 
 const schema = yup.object({
   title: yup.string().required("Please enter your title"),
 });
 
 const PostAddNew = () => {
+  useEffect(() => {
+    document.title = "Add new post";
+  }, []);
   const {
     control,
     watch,
     setValue,
+    getValues,
     handleSubmit,
     formState: { isValid, isSubmitting, errors },
   } = useForm({
@@ -42,9 +53,47 @@ const PostAddNew = () => {
   });
   const watchStatus = watch("status");
   const watchHot = watch("hot");
-  useEffect(() => {
-    document.title = "Add new post";
-  }, []);
+  const [progress, setProgress] = useState(0);
+  const [image, setImage] = useState("");
+  const handleUploadImage = (file) => {
+    const storage = getStorage();
+    const storageRef = ref(storage, "images/" + file.name);
+    const uploadTask = uploadBytesResumable(storageRef, file);
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        const progress =
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        setProgress(progress);
+        switch (snapshot.state) {
+          case "paused":
+            console.log("Upload is paused");
+            break;
+          case "running":
+            console.log("Upload is running");
+            break;
+          default:
+            console.log("Nothing at all");
+        }
+      },
+      (error) => {
+        console.log("Error");
+        setImage("");
+      },
+      () => {
+        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+          console.log("File available at", downloadURL);
+          setImage(downloadURL);
+        });
+      }
+    );
+  };
+  const handleSelectImage = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    setValue("image_name", file.name);
+    handleUploadImage(file);
+  };
   useEffect(() => {
     const arrErrors = Object.values(errors);
     if (arrErrors.length > 0) {
@@ -82,6 +131,15 @@ const PostAddNew = () => {
           </Field>
         </FormLayout>
         <FormLayout>
+          <Field>
+            <Label>Image</Label>
+            <ImageUpload
+              className="h-[250px]"
+              image={image}
+              onChange={handleSelectImage}
+              progress={progress}
+            ></ImageUpload>
+          </Field>
           <Field>
             <Label>Category</Label>
             <Dropdown>
