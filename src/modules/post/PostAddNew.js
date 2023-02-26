@@ -255,7 +255,7 @@ const PostAddNew = () => {
         </FormLayout>
         <Button
           type="submit"
-          className="mx-auto w-[250px] h-12 lg:h-[60px]"
+          className="mx-auto w-[250px] h-12 lg:h-[60px] mt-10"
           kind="secondary"
           isLoading={loading}
         >
