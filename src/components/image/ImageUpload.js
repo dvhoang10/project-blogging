@@ -6,6 +6,7 @@ const ImageUpload = ({
   className = "",
   image = "",
   progress = 0,
+  handleDeleteImage = () => {},
   ...rest
 }) => {
   return (
@@ -15,7 +16,13 @@ const ImageUpload = ({
         className
       )}
     >
-      <input type="file" name={name} className="hidden" {...rest} />
+      <input
+        type="file"
+        name={name}
+        className="hidden"
+        onChange={() => {}}
+        {...rest}
+      />
       {!image && progress === 0 && (
         <div className="flex flex-col items-center text-center pointer-events-none">
           <img
@@ -43,6 +50,7 @@ const ImageUpload = ({
           <button
             type="button"
             className="absolute z-10 flex items-center justify-center invisible w-16 h-16 text-red-500 transition-all bg-white rounded-full opacity-0 cursor-pointer group-hover:opacity-100 group-hover:visible"
+            onClick={handleDeleteImage}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"

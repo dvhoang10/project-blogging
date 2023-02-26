@@ -23,6 +23,7 @@ import {
   ref,
   uploadBytesResumable,
   getDownloadURL,
+  deleteObject,
 } from "firebase/storage";
 
 const schema = yup.object({
@@ -94,6 +95,19 @@ const PostAddNew = () => {
     setValue("image_name", file.name);
     handleUploadImage(file);
   };
+  const handleDeleteImage = () => {
+    const storage = getStorage();
+    const imageRef = ref(storage, "images/" + getValues("image_name"));
+    deleteObject(imageRef)
+      .then(() => {
+        toast.success("Delete image succesfully");
+        setImage("");
+        setProgress(0);
+      })
+      .catch((error) => {
+        toast.error("Can not delete image");
+      });
+  };
   useEffect(() => {
     const arrErrors = Object.values(errors);
     if (arrErrors.length > 0) {
@@ -137,6 +151,7 @@ const PostAddNew = () => {
               className="h-[250px]"
               image={image}
               onChange={handleSelectImage}
+              handleDeleteImage={handleDeleteImage}
               progress={progress}
             ></ImageUpload>
           </Field>
