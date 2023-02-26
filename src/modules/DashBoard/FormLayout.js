@@ -1,5 +1,5 @@
 import React from "react";
-import Proptypes from "prop-types";
+import PropTypes from "prop-types";
 import { withErrorBoundary } from "react-error-boundary";
 import ErrorComponent from "components/common/ErrorComponent";
 
@@ -12,7 +12,7 @@ const FormLayout = ({ children }) => {
 };
 
 FormLayout.prototype = {
-  children: Proptypes.node,
+  children: PropTypes.node,
 };
 
 export default withErrorBoundary(FormLayout, {

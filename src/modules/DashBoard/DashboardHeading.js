@@ -1,7 +1,7 @@
 import ErrorComponent from "components/common/ErrorComponent";
 import React from "react";
 import { withErrorBoundary } from "react-error-boundary";
-import Proptypes from "prop-types";
+import PropTypes from "prop-types";
 
 const DashboardHeading = ({ title = "", desc = "", children }) => {
   return (
@@ -18,9 +18,9 @@ const DashboardHeading = ({ title = "", desc = "", children }) => {
 };
 
 DashboardHeading.prototype = {
-  title: Proptypes.string,
-  desc: Proptypes.string,
-  children: Proptypes.node,
+  title: PropTypes.string,
+  desc: PropTypes.string,
+  children: PropTypes.node,
 };
 
 export default withErrorBoundary(DashboardHeading, {

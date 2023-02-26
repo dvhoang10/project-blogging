@@ -4,7 +4,7 @@ import PostCategory from "./PostCategory";
 import PostImage from "./PostImage";
 import PostMeta from "./PostMeta";
 import PostTitle from "./PostTitle";
-import Proptypes from "prop-types";
+import PropTypes from "prop-types";
 import { withErrorBoundary } from "react-error-boundary";
 import ErrorComponent from "components/common/ErrorComponent";
 
@@ -38,7 +38,7 @@ const PostLatestLarge = ({ data }) => {
 };
 
 PostLatestLarge.prototype = {
-  data: Proptypes.object,
+  data: PropTypes.object,
 };
 
 export default withErrorBoundary(PostLatestLarge, {

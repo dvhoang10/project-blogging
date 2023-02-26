@@ -1,5 +1,5 @@
 import React from "react";
-import Proptypes from "prop-types";
+import PropTypes from "prop-types";
 import { withErrorBoundary } from "react-error-boundary";
 import ErrorComponent from "components/common/ErrorComponent";
 
@@ -8,7 +8,7 @@ const FieldCheckboxes = ({ children }) => {
 };
 
 FieldCheckboxes.prototype = {
-  children: Proptypes.node,
+  children: PropTypes.node,
 };
 
 export default withErrorBoundary(FieldCheckboxes, {

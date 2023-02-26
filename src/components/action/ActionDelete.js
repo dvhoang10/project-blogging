@@ -1,4 +1,7 @@
 import React from "react";
+import PropTypes from "prop-types";
+import { withErrorBoundary } from "react-error-boundary";
+import ErrorComponent from "components/common/ErrorComponent";
 
 const ActionDelete = ({ onClick = () => {} }) => {
   return (
@@ -24,4 +27,10 @@ const ActionDelete = ({ onClick = () => {} }) => {
   );
 };
 
-export default ActionDelete;
+ActionDelete.prototype = {
+  onClick: PropTypes.func,
+};
+
+export default withErrorBoundary(ActionDelete, {
+  FallbackComponent: ErrorComponent,
+});

@@ -1,6 +1,6 @@
 import React from "react";
 import { useController } from "react-hook-form";
-import Proptypes from "prop-types";
+import PropTypes from "prop-types";
 import { withErrorBoundary } from "react-error-boundary";
 import ErrorComponent from "components/common/ErrorComponent";
 
@@ -49,10 +49,10 @@ const Radio = ({ control, name, checked, children, ...rest }) => {
 };
 
 Radio.prototype = {
-  control: Proptypes.node,
-  name: Proptypes.string,
-  checked: Proptypes.bool,
-  children: Proptypes.node,
+  control: PropTypes.node,
+  name: PropTypes.string,
+  checked: PropTypes.bool,
+  children: PropTypes.node,
 };
 
 export default withErrorBoundary(Radio, {

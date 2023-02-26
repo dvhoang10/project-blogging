@@ -37,9 +37,6 @@ const schema = yup.object({
 });
 
 const PostAddNew = () => {
-  useEffect(() => {
-    document.title = "Add new post";
-  }, []);
   const {
     control,
     watch,
@@ -93,6 +90,7 @@ const PostAddNew = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userInfo.email]);
   useEffect(() => {
+    document.title = "Add new post";
     async function getData() {
       const colRef = collection(db, "categories");
       const q = query(colRef, where("status", "==", 1));

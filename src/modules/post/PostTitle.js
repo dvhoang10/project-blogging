@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import classNames from "utils/classNames";
-import Proptypes from "prop-types";
+import PropTypes from "prop-types";
 import { withErrorBoundary } from "react-error-boundary";
 import ErrorComponent from "components/common/ErrorComponent";
 
@@ -27,10 +27,10 @@ const PostTitle = ({ children, className = "", to = "", size = "normal" }) => {
 };
 
 PostTitle.prototype = {
-  children: Proptypes.node,
-  className: Proptypes.string,
-  to: Proptypes.string,
-  size: Proptypes.oneOf(["normal", "large"]),
+  children: PropTypes.node,
+  className: PropTypes.string,
+  to: PropTypes.string,
+  size: PropTypes.oneOf(["normal", "large"]),
 };
 
 export default withErrorBoundary(PostTitle, {

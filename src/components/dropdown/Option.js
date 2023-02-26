@@ -1,6 +1,6 @@
 import React from "react";
 import { useDropdown } from "./dropdown-context";
-import Proptypes from "prop-types";
+import PropTypes from "prop-types";
 import { withErrorBoundary } from "react-error-boundary";
 import ErrorComponent from "components/common/ErrorComponent";
 
@@ -21,8 +21,8 @@ const Option = ({ onClick, children }) => {
 };
 
 Option.prototype = {
-  onClick: Proptypes.func,
-  children: Proptypes.node,
+  onClick: PropTypes.func,
+  children: PropTypes.node,
 };
 
 export default withErrorBoundary(Option, { FallbackComponent: ErrorComponent });

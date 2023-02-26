@@ -1,5 +1,5 @@
 import React from "react";
-import Proptypes from "prop-types";
+import PropTypes from "prop-types";
 import { withErrorBoundary } from "react-error-boundary";
 import ErrorComponent from "components/common/ErrorComponent";
 
@@ -30,8 +30,8 @@ const Toggle = ({ on = false, onClick = () => {}, ...rest }) => {
 };
 
 Toggle.prototype = {
-  on: Proptypes.bool,
-  onClick: Proptypes.func,
+  on: PropTypes.bool,
+  onClick: PropTypes.func,
 };
 
 export default withErrorBoundary(Toggle, { FallbackComponent: ErrorComponent });

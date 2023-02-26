@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import Proptypes from "prop-types";
+import PropTypes from "prop-types";
 import { withErrorBoundary } from "react-error-boundary";
 import ErrorComponent from "components/common/ErrorComponent";
 import classNames from "utils/classNames";
@@ -31,10 +31,10 @@ const PostCategory = ({
 };
 
 PostCategory.prototype = {
-  children: Proptypes.node,
-  className: Proptypes.string,
-  to: Proptypes.string,
-  type: Proptypes.oneOf(["primary", "secondary"]),
+  children: PropTypes.node,
+  className: PropTypes.string,
+  to: PropTypes.string,
+  type: PropTypes.oneOf(["primary", "secondary"]),
 };
 
 export default withErrorBoundary(PostCategory, {

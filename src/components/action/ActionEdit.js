@@ -1,4 +1,7 @@
 import React from "react";
+import PropTypes from "prop-types";
+import { withErrorBoundary } from "react-error-boundary";
+import ErrorComponent from "components/common/ErrorComponent";
 
 const ActionEdit = ({ onClick = () => {} }) => {
   return (
@@ -24,4 +27,10 @@ const ActionEdit = ({ onClick = () => {} }) => {
   );
 };
 
-export default ActionEdit;
+ActionEdit.prototype = {
+  onClick: PropTypes.func,
+};
+
+export default withErrorBoundary(ActionEdit, {
+  FallbackComponent: ErrorComponent,
+});

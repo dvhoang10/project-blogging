@@ -1,5 +1,5 @@
 import React from "react";
-import Proptypes from "prop-types";
+import PropTypes from "prop-types";
 import { withErrorBoundary } from "react-error-boundary";
 import ErrorComponent from "components/common/ErrorComponent";
 import classNames from "utils/classNames";
@@ -13,7 +13,7 @@ const Table = ({ children, className = "" }) => {
 };
 
 Table.prototype = {
-  children: Proptypes.string,
+  children: PropTypes.string,
 };
 
 export default withErrorBoundary(Table, {

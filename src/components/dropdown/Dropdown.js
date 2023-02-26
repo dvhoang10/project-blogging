@@ -1,6 +1,6 @@
 import React from "react";
 import { DropdownProvider } from "./dropdown-context";
-import Proptypes from "prop-types";
+import PropTypes from "prop-types";
 import { withErrorBoundary } from "react-error-boundary";
 import ErrorComponent from "components/common/ErrorComponent";
 
@@ -13,7 +13,7 @@ const Dropdown = ({ children, ...rest }) => {
 };
 
 Dropdown.prototype = {
-  children: Proptypes.node,
+  children: PropTypes.node,
 };
 
 export default withErrorBoundary(Dropdown, {

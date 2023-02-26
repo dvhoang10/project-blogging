@@ -21,6 +21,7 @@
     "react-toastify": "^9.1.1",
     "sass": "^1.58.3",
     "slugify": "^1.6.5",
+    "sweetalert2": "^11.7.2",
     "web-vitals": "^2.1.4",
     "yup": "^1.0.0"
   },
