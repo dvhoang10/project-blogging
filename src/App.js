@@ -14,6 +14,9 @@ const DashboardLayout = React.lazy(() =>
   import("modules/Dashboard/DashboardLayout")
 );
 const PostAddNew = React.lazy(() => import("modules/post/PostAddNew"));
+const CategoryAddNew = React.lazy(() =>
+  import("modules/category/CategoryAddNew")
+);
 
 function App() {
   return (
@@ -39,6 +42,10 @@ function App() {
               <Route
                 path="/manage/add-post"
                 element={<PostAddNew></PostAddNew>}
+              ></Route>
+              <Route
+                path="/manage/add-category"
+                element={<CategoryAddNew></CategoryAddNew>}
               ></Route>
             </Route>
           </Routes>

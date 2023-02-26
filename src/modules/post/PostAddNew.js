@@ -141,6 +141,10 @@ const PostAddNew = () => {
         createAt: serverTimestamp(),
       });
       toast.success("Create the new post successfully!");
+    } catch (error) {
+      setLoading(false);
+      toast.error(error.message);
+    } finally {
       reset({
         title: "",
         slug: "",
@@ -152,10 +156,6 @@ const PostAddNew = () => {
       });
       setSelectCategory({});
       handleResetUpload();
-    } catch (error) {
-      setLoading(false);
-      toast.error("Create the new post unsuccessfully!");
-    } finally {
       setLoading(false);
     }
   };
