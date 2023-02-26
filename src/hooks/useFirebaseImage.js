@@ -63,11 +63,15 @@ export default function useFirebaseImage(setValue, getValues) {
         toast.error("Can not delete image");
       });
   };
+  const handleResetUpload = () => {
+    setImage("");
+    setProgress(0);
+  };
   return {
     image,
-    setImage,
     progress,
     handleSelectImage,
     handleDeleteImage,
+    handleResetUpload,
   };
 }

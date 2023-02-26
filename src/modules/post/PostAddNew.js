@@ -64,8 +64,13 @@ const PostAddNew = () => {
   const { userInfo } = useAuth();
   const watchStatus = watch("status");
   const watchHot = watch("hot");
-  const { image, progress, handleSelectImage, handleDeleteImage } =
-    useFirebaseImage(setValue, getValues);
+  const {
+    image,
+    progress,
+    handleSelectImage,
+    handleDeleteImage,
+    handleResetUpload,
+  } = useFirebaseImage(setValue, getValues);
   const [categories, setCategories] = useState([]);
   const [selectCategory, setSelectCategory] = useState("");
   const [loading, setLoading] = useState(false);
@@ -145,7 +150,8 @@ const PostAddNew = () => {
         image: "",
         user: {},
       });
-      setCategories({});
+      setSelectCategory({});
+      handleResetUpload();
     } catch (error) {
       setLoading(false);
       toast.error("Create the new post unsuccessfully!");
