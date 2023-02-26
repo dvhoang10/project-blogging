@@ -3,11 +3,28 @@ import Button from "components/button/Button";
 import ErrorComponent from "components/common/ErrorComponent";
 import { LabelStatus } from "components/label";
 import { Table } from "components/table";
+import { db } from "firebase-app/firebase-config";
+import { collection, onSnapshot } from "firebase/firestore";
 import DashboardHeading from "modules/Dashboard/DashboardHeading";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { withErrorBoundary } from "react-error-boundary";
+import { categoryStatus } from "utils/constant";
 
 const CategoryManage = () => {
+  const [categoryList, setCategoryList] = useState([]);
+  useEffect(() => {
+    const colRef = collection(db, "categories");
+    onSnapshot(colRef, (snapshot) => {
+      let results = [];
+      snapshot.forEach((doc) => {
+        results.push({
+          id: doc.id,
+          ...doc.data(),
+        });
+      });
+      setCategoryList(results);
+    });
+  }, []);
   return (
     <>
       <DashboardHeading title="Categories" desc="Manage your categories">
@@ -30,23 +47,31 @@ const CategoryManage = () => {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>01</td>
-            <td>Frontend Developer</td>
-            <td>
-              <em className="text-gray-400">frontend-developer</em>
-            </td>
-            <td>
-              <LabelStatus type="success">Approved</LabelStatus>
-            </td>
-            <td>
-              <div className="flex items-center gap-5">
-                <ActionView></ActionView>
-                <ActionEdit></ActionEdit>
-                <ActionDelete></ActionDelete>
-              </div>
-            </td>
-          </tr>
+          {categoryList.length > 0 &&
+            categoryList.map((category) => (
+              <tr key={category.id}>
+                <td>{category.id}</td>
+                <td>{category.name}</td>
+                <td>
+                  <span className="italic text-gray-400">{category.slug}</span>
+                </td>
+                <td>
+                  {Number(category.status) === categoryStatus.APPROVED && (
+                    <LabelStatus type="success">Approved</LabelStatus>
+                  )}{" "}
+                  {Number(category.status) === categoryStatus.UNAPPROVED && (
+                    <LabelStatus type="warning">Unapproved</LabelStatus>
+                  )}
+                </td>
+                <td>
+                  <div className="flex items-center gap-5">
+                    <ActionView></ActionView>
+                    <ActionEdit></ActionEdit>
+                    <ActionDelete></ActionDelete>
+                  </div>
+                </td>
+              </tr>
+            ))}
         </tbody>
       </Table>
     </>
