@@ -5,7 +5,7 @@ import Proptypes from "prop-types";
 
 const DashboardHeading = ({ title = "", desc = "", children }) => {
   return (
-    <div className="flex items-start justify-between mb-10">
+    <div className="flex flex-col items-start justify-between mb-10 lg:flex-row">
       <div>
         <h1 className="text-xl font-semibold lg:text-4xl mb-[5px] text-black">
           {title}

@@ -1,4 +1,5 @@
 import { AuthProvider } from "contexts/auth-context";
+
 import React, { Suspense } from "react";
 import { Route, Routes } from "react-router-dom";
 const HomePage = React.lazy(() => import("pages/HomePage"));
@@ -14,6 +15,9 @@ const DashboardLayout = React.lazy(() =>
   import("modules/Dashboard/DashboardLayout")
 );
 const PostAddNew = React.lazy(() => import("modules/post/PostAddNew"));
+const CategoryManage = React.lazy(() =>
+  import("modules/category/CategoryManage")
+);
 const CategoryAddNew = React.lazy(() =>
   import("modules/category/CategoryAddNew")
 );
@@ -42,6 +46,10 @@ function App() {
               <Route
                 path="/manage/add-post"
                 element={<PostAddNew></PostAddNew>}
+              ></Route>
+              <Route
+                path="/manage/category"
+                element={<CategoryManage></CategoryManage>}
               ></Route>
               <Route
                 path="/manage/add-category"
