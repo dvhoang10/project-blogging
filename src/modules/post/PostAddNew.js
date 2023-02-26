@@ -13,9 +13,23 @@ import React, { useEffect } from "react";
 import { withErrorBoundary } from "react-error-boundary";
 import { useForm } from "react-hook-form";
 import { postStatus } from "utils/constant";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+import { toast } from "react-toastify";
+import slugify from "slugify";
+
+const schema = yup.object({
+  title: yup.string().required("Please enter your title"),
+});
 
 const PostAddNew = () => {
-  const { control, watch, setValue, handleSubmit } = useForm({
+  const {
+    control,
+    watch,
+    setValue,
+    handleSubmit,
+    formState: { isValid, isSubmitting, errors },
+  } = useForm({
     mode: "onChange",
     defaultValues: {
       title: "",
@@ -24,26 +38,38 @@ const PostAddNew = () => {
       hot: false,
       category: "",
     },
+    resolver: yupResolver(schema),
   });
   const watchStatus = watch("status");
   const watchHot = watch("hot");
-  const addPostHandler = async (values) => {
-    console.log("🚀 ~ values:", values);
-  };
   useEffect(() => {
     document.title = "Add new post";
   }, []);
+  useEffect(() => {
+    const arrErrors = Object.values(errors);
+    if (arrErrors.length > 0) {
+      toast.error(arrErrors[0]?.message, {
+        pauseOnHover: false,
+        delay: 0,
+      });
+    }
+  }, [errors]);
+  const addPostHandler = async (values) => {
+    const cloneValues = { ...values };
+    cloneValues.slug = slugify(values.slug || values.title, { lower: true });
+    cloneValues.status = Number(values.status);
+  };
   return (
     <div>
       <DashboardHeading title="Add new post"></DashboardHeading>
       <form onSubmit={handleSubmit(addPostHandler)}>
         <FormLayout>
           <Field>
-            <Label htmlFor="title">Title</Label>
+            <Label htmlFor="title">Title *</Label>
             <Input
               control={control}
               name="title"
-              placeholder="Enter the title of post"
+              placeholder="Enter your title"
             ></Input>
           </Field>
           <Field>
@@ -109,6 +135,7 @@ const PostAddNew = () => {
           type="submit"
           className="mx-auto w-[250px] h-12 lg:h-[60px]"
           kind="secondary"
+          isLoading={isSubmitting}
         >
           Add new post
         </Button>
