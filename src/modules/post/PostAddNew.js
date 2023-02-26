@@ -20,14 +20,17 @@ import slugify from "slugify";
 import ImageUpload from "components/image/ImageUpload";
 import useFirebaseImage from "hooks/useFirebaseImage";
 import {
+  addDoc,
   collection,
   doc,
   getDoc,
   getDocs,
   query,
+  serverTimestamp,
   where,
 } from "firebase/firestore";
 import { db } from "firebase-app/firebase-config";
+import { useAuth } from "contexts/auth-context";
 
 const schema = yup.object({
   title: yup.string().required("Please enter your title"),
@@ -43,6 +46,7 @@ const PostAddNew = () => {
     setValue,
     getValues,
     handleSubmit,
+    reset,
     formState: { isValid, isSubmitting, errors },
   } = useForm({
     mode: "onChange",
@@ -52,15 +56,37 @@ const PostAddNew = () => {
       status: 2,
       hot: false,
       category: {},
+      image: "",
+      user: {},
     },
     resolver: yupResolver(schema),
   });
+  const { userInfo } = useAuth();
   const watchStatus = watch("status");
   const watchHot = watch("hot");
   const { image, progress, handleSelectImage, handleDeleteImage } =
     useFirebaseImage(setValue, getValues);
   const [categories, setCategories] = useState([]);
   const [selectCategory, setSelectCategory] = useState("");
+  const [loading, setLoading] = useState(false);
+  useEffect(() => {
+    async function fetchUserData() {
+      if (!userInfo.email) return;
+      const q = query(
+        collection(db, "users"),
+        where("email", "==", userInfo.email)
+      );
+      const querySnapshot = await getDocs(q);
+      querySnapshot.forEach((doc) => {
+        setValue("user", {
+          id: doc.id,
+          ...doc.data(),
+        });
+      });
+    }
+    fetchUserData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userInfo.email]);
   useEffect(() => {
     async function getData() {
       const colRef = collection(db, "categories");
@@ -96,13 +122,39 @@ const PostAddNew = () => {
     }
   }, [errors]);
   const addPostHandler = async (values) => {
-    const cloneValues = { ...values };
-    cloneValues.slug = slugify(values.slug || values.title, { lower: true });
-    cloneValues.status = Number(values.status);
-    console.log("🚀 ~ cloneValues:", cloneValues);
+    if (!isValid) return;
+    setLoading(true);
+    try {
+      const cloneValues = { ...values };
+      cloneValues.slug = slugify(values.slug || values.title, { lower: true });
+      cloneValues.status = Number(values.status);
+      // console.log("🚀 ~ cloneValues:", cloneValues);
+      const colRef = collection(db, "posts");
+      await addDoc(colRef, {
+        ...cloneValues,
+        image,
+        createAt: serverTimestamp(),
+      });
+      toast.success("Create the new post successfully!");
+      reset({
+        title: "",
+        slug: "",
+        status: 2,
+        hot: false,
+        category: {},
+        image: "",
+        user: {},
+      });
+      setCategories({});
+    } catch (error) {
+      setLoading(false);
+      toast.error("Create the new post unsuccessfully!");
+    } finally {
+      setLoading(false);
+    }
   };
   return (
-    <div>
+    <>
       <DashboardHeading title="Add new post"></DashboardHeading>
       <form onSubmit={handleSubmit(addPostHandler)}>
         <FormLayout>
@@ -199,12 +251,12 @@ const PostAddNew = () => {
           type="submit"
           className="mx-auto w-[250px] h-12 lg:h-[60px]"
           kind="secondary"
-          isLoading={isSubmitting}
+          isLoading={loading}
         >
           Add new post
         </Button>
       </form>
-    </div>
+    </>
   );
 };
 
