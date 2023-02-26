@@ -1,4 +1,5 @@
 import { AuthProvider } from "contexts/auth-context";
+import CategoryUpdate from "modules/category/CategoryUpdate";
 
 import React, { Suspense } from "react";
 import { Route, Routes } from "react-router-dom";
@@ -55,6 +56,11 @@ function App() {
                 path="/manage/add-category"
                 element={<CategoryAddNew></CategoryAddNew>}
               ></Route>
+              <Route
+                path="/manage/update-category"
+                element={<CategoryUpdate></CategoryUpdate>}
+              ></Route>
+              s
             </Route>
           </Routes>
         </Suspense>
