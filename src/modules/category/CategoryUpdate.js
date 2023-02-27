@@ -38,16 +38,17 @@ const CategoryUpdate = () => {
     defaultValues: {},
     resolver: yupResolver(schema),
   });
-  const [params] = useSearchParams();
   const navigate = useNavigate();
+  const [params] = useSearchParams();
   const categoryId = params.get("id");
   const watchStatus = watch("status");
   const [loading, setLoading] = useState(false);
   useEffect(() => {
     async function fetchData() {
+      if (!categoryId) return;
       const colRef = doc(db, "categories", categoryId);
       const singleDoc = await getDoc(colRef);
-      reset(singleDoc.data());
+      reset(singleDoc?.data());
     }
     fetchData();
   }, [categoryId, reset]);
@@ -87,6 +88,7 @@ const CategoryUpdate = () => {
       setLoading(false);
     }
   };
+  if (!categoryId) return null;
   return (
     <>
       <DashboardHeading

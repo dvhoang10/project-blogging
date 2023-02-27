@@ -1,5 +1,4 @@
 import { AuthProvider } from "contexts/auth-context";
-
 import React, { Suspense } from "react";
 import { Route, Routes } from "react-router-dom";
 const HomePage = React.lazy(() => import("pages/HomePage"));
@@ -26,6 +25,7 @@ const CategoryUpdate = React.lazy(() =>
 );
 const UserManage = React.lazy(() => import("modules/user/UserManage"));
 const UserAddNew = React.lazy(() => import("modules/user/UserAddNew"));
+const UserUpdate = React.lazy(() => import("modules/user/UserUpdate"));
 
 function App() {
   return (
@@ -71,6 +71,10 @@ function App() {
               <Route
                 path="/manage/add-user"
                 element={<UserAddNew></UserAddNew>}
+              ></Route>
+              <Route
+                path="/manage/update-user"
+                element={<UserUpdate></UserUpdate>}
               ></Route>
             </Route>
           </Routes>

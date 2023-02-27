@@ -3,7 +3,7 @@ import { auth } from "firebase-app/firebase-config";
 import { signOut } from "firebase/auth";
 import React from "react";
 import { withErrorBoundary } from "react-error-boundary";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 const sidebarLinks = [
   {
@@ -105,13 +105,14 @@ const sidebarLinks = [
         />
       </svg>
     ),
-    onClick: () => signOut(auth),
+    onClick: () => {},
   },
 ];
 
 const SideBar = () => {
   const navLinkClass =
     "hidden lg:flex items-center gap-5 px-5 py-[14px] font-medium cursor-pointer hover:bg-[#f1fbf7] hover:text-primary text-base";
+  const navigate = useNavigate();
   return (
     <div className="w-[300px] bg-white shadow-sideBar rounded-lg flex flex-col gap-5">
       {sidebarLinks.map((link) => {
@@ -119,7 +120,10 @@ const SideBar = () => {
           return (
             <div
               className={`${navLinkClass} text-gray80`}
-              onClick={link.onClick}
+              onClick={() => {
+                navigate("/");
+                signOut(auth);
+              }}
               key={link.title}
             >
               <span>{link.icon}</span>
