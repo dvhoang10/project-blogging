@@ -17,12 +17,14 @@ import { toast } from "react-toastify";
 import slugify from "slugify";
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import { db } from "firebase-app/firebase-config";
+import { useNavigate } from "react-router-dom";
 
 const schema = yup.object({
   name: yup.string().required("Please enter category name"),
 });
 
 const CategoryAddNew = () => {
+  const navigate = useNavigate();
   useEffect(() => {
     document.title = "Add new category";
   }, []);
@@ -76,6 +78,7 @@ const CategoryAddNew = () => {
         status: 1,
       });
       setLoading(false);
+      navigate("/manage/category");
     }
   };
   return (

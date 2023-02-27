@@ -4,6 +4,9 @@ import { Table } from "components/table";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { userRole, userStatus } from "utils/constant";
+import PropTypes from "prop-types";
+import { withErrorBoundary } from "react-error-boundary";
+import ErrorComponent from "components/common/ErrorComponent";
 
 const UserTable = ({ data }) => {
   const navigate = useNavigate();
@@ -87,4 +90,10 @@ const UserTable = ({ data }) => {
   );
 };
 
-export default UserTable;
+UserTable.prototype = {
+  data: PropTypes.object,
+};
+
+export default withErrorBoundary(UserTable, {
+  FallbackComponent: ErrorComponent,
+});

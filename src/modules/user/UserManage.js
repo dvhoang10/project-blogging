@@ -1,9 +1,11 @@
 import Button from "components/button/Button";
+import ErrorComponent from "components/common/ErrorComponent";
 import { db } from "firebase-app/firebase-config";
 import { collection, onSnapshot, query, where } from "firebase/firestore";
 import { debounce } from "lodash";
 import DashboardHeading from "modules/Dashboard/DashboardHeading";
 import React, { useEffect, useState } from "react";
+import { withErrorBoundary } from "react-error-boundary";
 import UserTable from "./UserTable";
 
 const UserManage = () => {
@@ -64,4 +66,6 @@ const UserManage = () => {
   );
 };
 
-export default UserManage;
+export default withErrorBoundary(UserManage, {
+  FallbackComponent: ErrorComponent,
+});
