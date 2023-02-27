@@ -27,6 +27,7 @@ const CategoryUpdate = React.lazy(() =>
 const UserManage = React.lazy(() => import("modules/user/UserManage"));
 const UserAddNew = React.lazy(() => import("modules/user/UserAddNew"));
 const UserUpdate = React.lazy(() => import("modules/user/UserUpdate"));
+const PostUpdate = React.lazy(() => import("modules/post/PostUpdate"));
 
 function App() {
   return (
@@ -56,6 +57,10 @@ function App() {
               <Route
                 path="/manage/add-post"
                 element={<PostAddNew></PostAddNew>}
+              ></Route>
+              <Route
+                path="/manage/update-post"
+                element={<PostUpdate></PostUpdate>}
               ></Route>
               <Route
                 path="/manage/category"
