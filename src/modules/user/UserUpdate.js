@@ -164,6 +164,7 @@ const UserUpdate = () => {
               placeholder="Enter your email"
               control={control}
               type="email"
+              disabled
             ></Input>
           </Field>
           <Field>
@@ -173,6 +174,7 @@ const UserUpdate = () => {
               placeholder="Enter your password"
               control={control}
               type="password"
+              disabled
             ></Input>
           </Field>
         </FormLayout>

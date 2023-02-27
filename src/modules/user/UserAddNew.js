@@ -14,13 +14,15 @@ import { toast } from "react-toastify";
 import FieldCheckboxes from "components/field/FieldCheckboxes";
 import { Radio } from "components/checkbox";
 import { userRole, userStatus } from "utils/constant";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth, db } from "firebase-app/firebase-config";
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import slugify from "slugify";
 import { useNavigate } from "react-router-dom";
 import { withErrorBoundary } from "react-error-boundary";
 import ErrorComponent from "components/common/ErrorComponent";
+import useToggleValue from "hooks/useToggleValue";
+import { IconEyeToogle } from "components/icons";
 
 const schema = yup.object({
   fullname: yup.string().required("Please enter your fullname"),
@@ -69,6 +71,8 @@ const UserAddNew = () => {
   const watchStatus = watch("status");
   const watchRole = watch("role");
   const navigate = useNavigate();
+  const { value: showPassword, handleToggleValue: handleTogglePassword } =
+    useToggleValue();
   useEffect(() => {
     const arrErrors = Object.values(errors);
     if (arrErrors.length > 0) {
@@ -85,6 +89,9 @@ const UserAddNew = () => {
       //   image ||
       //   "https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png";
       await createUserWithEmailAndPassword(auth, values.email, values.password);
+      await updateProfile(auth.currentUser, {
+        displayName: values.fullname,
+      });
       await addDoc(collection(db, "users"), {
         avatar: image,
         fullname: values.fullname,
@@ -164,11 +171,16 @@ const UserAddNew = () => {
           <Field>
             <Label>Password*</Label>
             <Input
-              name="password"
-              placeholder="Enter your password"
               control={control}
-              type="password"
-            ></Input>
+              name="password"
+              type={`${showPassword ? "text" : "password"}`}
+              placeholder="Create your password"
+            >
+              <IconEyeToogle
+                open={showPassword}
+                onClick={handleTogglePassword}
+              ></IconEyeToogle>
+            </Input>
           </Field>
         </FormLayout>
         <FormLayout>
