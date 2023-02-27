@@ -54,6 +54,8 @@ const CategoryManage = () => {
   };
   useEffect(() => {
     document.title = "Manage categories";
+  }, []);
+  useEffect(() => {
     async function fetchData() {
       const colRef = collection(db, "categories");
       onSnapshot(colRef, (snapshot) => {

@@ -1,6 +1,4 @@
 import { AuthProvider } from "contexts/auth-context";
-import CategoryUpdate from "modules/category/CategoryUpdate";
-
 import React, { Suspense } from "react";
 import { Route, Routes } from "react-router-dom";
 const HomePage = React.lazy(() => import("pages/HomePage"));
@@ -22,6 +20,10 @@ const CategoryManage = React.lazy(() =>
 const CategoryAddNew = React.lazy(() =>
   import("modules/category/CategoryAddNew")
 );
+const CategoryUpdate = React.lazy(() =>
+  import("modules/category/CategoryUpdate")
+);
+const UserManage = React.lazy(() => import("modules/user/UserManage"));
 
 function App() {
   return (
@@ -60,7 +62,10 @@ function App() {
                 path="/manage/update-category"
                 element={<CategoryUpdate></CategoryUpdate>}
               ></Route>
-              s
+              <Route
+                path="/manage/user"
+                element={<UserManage></UserManage>}
+              ></Route>
             </Route>
           </Routes>
         </Suspense>
