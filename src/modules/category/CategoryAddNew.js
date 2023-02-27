@@ -39,7 +39,7 @@ const CategoryAddNew = () => {
     defaultValues: {
       name: "",
       slug: "",
-      status: 1,
+      status: categoryStatus.APPROVED,
     },
     resolver: yupResolver(schema),
   });
@@ -75,7 +75,7 @@ const CategoryAddNew = () => {
       reset({
         name: "",
         slug: "",
-        status: 1,
+        status: categoryStatus.APPROVED,
       });
       setLoading(false);
       navigate("/manage/category");

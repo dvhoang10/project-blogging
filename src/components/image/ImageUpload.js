@@ -16,13 +16,7 @@ const ImageUpload = ({
         className
       )}
     >
-      <input
-        type="file"
-        name={name}
-        className="hidden"
-        onChange={() => {}}
-        {...rest}
-      />
+      <input type="file" name={name} className="hidden" {...rest} />
       {!image && progress === 0 && (
         <div className="flex flex-col items-center text-center pointer-events-none">
           <img

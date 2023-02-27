@@ -82,7 +82,7 @@ const CategoryUpdate = () => {
       reset({
         name: "",
         slug: "",
-        status: 1,
+        status: categoryStatus.APPROVED,
       });
       setLoading(false);
     }

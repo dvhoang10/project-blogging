@@ -78,7 +78,7 @@ const SignUpPage = () => {
         email: values.email,
         password: values.password,
         avatar:
-          "https://www.google.com/url?sa=i&url=https%3A%2F%2Ficon-icons.com%2Ficon%2Favatar-default-user%2F92824&psig=AOvVaw0GtSabIypwDftTYhqKDwIF&ust=1677199456772000&source=images&cd=vfe&ved=0CBAQjRxqFwoTCJDRmIG1qv0CFQAAAAAdAAAAABAd",
+          "https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png",
         status: userStatus.ACTIVE,
         role: userRole.USER,
         createdAt: serverTimestamp(),
