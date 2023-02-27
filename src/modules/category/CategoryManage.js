@@ -102,23 +102,7 @@ const CategoryManage = () => {
           onChange={handleFilter}
         />
       </div>
-      <Table className="text-base">
-        <thead>
-          <tr>
-            <th>Id</th>
-            <th>Name</th>
-            <th>Slug</th>
-            <th>Status</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {categoryList.length > 0 &&
-            categoryList.map((category) => (
-              <CategoryTable data={category}></CategoryTable>
-            ))}
-        </tbody>
-      </Table>
+      <CategoryTable data={categoryList}></CategoryTable>
       {total > categoryList.length && !filter && (
         <div>
           <Button

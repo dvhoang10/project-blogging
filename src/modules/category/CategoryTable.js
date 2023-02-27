@@ -9,6 +9,7 @@ import { categoryStatus } from "utils/constant";
 import PropTypes from "prop-types";
 import { withErrorBoundary } from "react-error-boundary";
 import ErrorComponent from "components/common/ErrorComponent";
+import { Table } from "components/table";
 
 const CategoryTable = ({ data }) => {
   const navigate = useNavigate();
@@ -29,32 +30,54 @@ const CategoryTable = ({ data }) => {
       }
     });
   };
+  const renderCategory = (category) => {
+    return (
+      <tr key={category.id}>
+        <td>{category.id}</td>
+        <td>{category.name}</td>
+        <td>
+          <span className="italic text-gray-400">{category.slug}</span>
+        </td>
+        <td>
+          {Number(data.status) === categoryStatus.APPROVED && (
+            <LabelStatus type="success">Approved</LabelStatus>
+          )}{" "}
+          {Number(data.status) === categoryStatus.UNAPPROVED && (
+            <LabelStatus type="warning">Unapproved</LabelStatus>
+          )}
+        </td>
+        <td>
+          <div className="flex items-center gap-5">
+            <ActionEdit
+              onClick={() =>
+                navigate(`/manage/update-category?id=${category.id}`)
+              }
+            ></ActionEdit>
+            <ActionDelete
+              onClick={() => handleDeleteCategory(category.id)}
+            ></ActionDelete>
+          </div>
+        </td>
+      </tr>
+    );
+  };
   return (
-    <tr key={data.id}>
-      <td>{data.id}</td>
-      <td>{data.name}</td>
-      <td>
-        <span className="italic text-gray-400">{data.slug}</span>
-      </td>
-      <td>
-        {Number(data.status) === categoryStatus.APPROVED && (
-          <LabelStatus type="success">Approved</LabelStatus>
-        )}{" "}
-        {Number(data.status) === categoryStatus.UNAPPROVED && (
-          <LabelStatus type="warning">Unapproved</LabelStatus>
-        )}
-      </td>
-      <td>
-        <div className="flex items-center gap-5">
-          <ActionEdit
-            onClick={() => navigate(`/manage/update-category?id=${data.id}`)}
-          ></ActionEdit>
-          <ActionDelete
-            onClick={() => handleDeleteCategory(data.id)}
-          ></ActionDelete>
-        </div>
-      </td>
-    </tr>
+    <>
+      <Table className="text-base">
+        <thead>
+          <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Slug</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {data.length > 0 && data.map((category) => renderCategory(category))}
+        </tbody>
+      </Table>
+    </>
   );
 };
 

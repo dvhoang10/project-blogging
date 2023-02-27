@@ -7,6 +7,9 @@ import { userRole, userStatus } from "utils/constant";
 import PropTypes from "prop-types";
 import { withErrorBoundary } from "react-error-boundary";
 import ErrorComponent from "components/common/ErrorComponent";
+import { deleteDoc, doc } from "firebase/firestore";
+import { db } from "firebase-app/firebase-config";
+import Swal from "sweetalert2";
 
 const UserTable = ({ data }) => {
   const navigate = useNavigate();
@@ -33,6 +36,23 @@ const UserTable = ({ data }) => {
       default:
         break;
     }
+  };
+  const handleDeleteUser = async (docId) => {
+    const colRef = doc(db, "users", docId);
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        await deleteDoc(colRef);
+        Swal.fire("Deleted!", "User has been deleted.", "success");
+      }
+    });
   };
   const renderUser = (user) => {
     return (
@@ -64,14 +84,19 @@ const UserTable = ({ data }) => {
             <ActionEdit
               onClick={() => navigate(`/manage/update-user?id=${user.id}`)}
             ></ActionEdit>
-            <ActionDelete onClick={() => {}}></ActionDelete>
+            <ActionDelete
+              onClick={() => {
+                handleDeleteUser(user.id);
+              }}
+            ></ActionDelete>
           </div>
         </td>
       </tr>
     );
   };
+
   return (
-    <div>
+    <>
       <Table className="text-base">
         <thead>
           <tr>
@@ -86,7 +111,7 @@ const UserTable = ({ data }) => {
         </thead>
         <tbody>{data.length > 0 && data.map((user) => renderUser(user))}</tbody>
       </Table>
-    </div>
+    </>
   );
 };
 
