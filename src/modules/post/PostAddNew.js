@@ -136,7 +136,7 @@ const PostAddNew = () => {
       await addDoc(colRef, {
         ...cloneValues,
         image,
-        createAt: serverTimestamp(),
+        createdAt: serverTimestamp(),
       });
       toast.success("Create the new post successfully!");
     } catch (error) {

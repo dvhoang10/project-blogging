@@ -1,4 +1,4 @@
-import Button from "components/button/Button";
+import { Button } from "components/button";
 import ErrorComponent from "components/common/ErrorComponent";
 import { db } from "firebase-app/firebase-config";
 import {
@@ -14,20 +14,23 @@ import { debounce } from "lodash";
 import DashboardHeading from "modules/Dashboard/DashboardHeading";
 import React, { useEffect, useState } from "react";
 import { withErrorBoundary } from "react-error-boundary";
-import CategoryTable from "./CategoryTable";
+import PostTable from "./PostTable";
 
-const CATEOGRY_PER_PAGE = 5;
+const POST_PER_PAGE = 3;
 
-const CategoryManage = () => {
-  const [categoryList, setCategoryList] = useState([]);
-  const [filter, setFilter] = useState(undefined);
+const PostManage = () => {
+  const [postList, setPostList] = useState([]);
+  const [filter, setFilter] = useState("");
   const [lastDoc, setLastDoc] = useState();
   const [total, setTotal] = useState(0);
-  const handleLoadMoreCategory = async () => {
+  useEffect(() => {
+    document.title = "Post manage";
+  }, []);
+  const handleLoadMorePost = async () => {
     const nextRef = query(
-      collection(db, "categories"),
+      collection(db, "posts"),
       startAfter(lastDoc || 0),
-      limit(CATEOGRY_PER_PAGE)
+      limit(POST_PER_PAGE)
     );
     onSnapshot(nextRef, (snapshot) => {
       let result = [];
@@ -37,7 +40,7 @@ const CategoryManage = () => {
           ...doc.data(),
         });
       });
-      setCategoryList([...categoryList, ...result]);
+      setPostList([...postList, ...result]);
     });
     const documentSnapshots = await getDocs(nextRef);
     const lastVisible =
@@ -45,21 +48,18 @@ const CategoryManage = () => {
     setLastDoc(lastVisible);
   };
   useEffect(() => {
-    document.title = "Manage categories";
-  }, []);
-  useEffect(() => {
     async function fetchData() {
-      const colRef = collection(db, "categories");
+      const colRef = collection(db, "posts");
       onSnapshot(colRef, (snapshot) => {
         setTotal(snapshot.size);
       });
       const newRef = filter
         ? query(
             colRef,
-            where("name", ">=", filter),
-            where("name", "<=", filter + "utf8")
+            where("title", ">=", filter),
+            where("title", "<=", filter + "utf8")
           )
-        : query(colRef, limit(CATEOGRY_PER_PAGE));
+        : query(colRef, limit(POST_PER_PAGE));
       const documentSnapshots = await getDocs(newRef);
       const lastVisible =
         documentSnapshots.docs[documentSnapshots.docs.length - 1];
@@ -71,7 +71,7 @@ const CategoryManage = () => {
             ...doc.data(),
           });
         });
-        setCategoryList(results);
+        setPostList(results);
       });
       setLastDoc(lastVisible);
     }
@@ -81,31 +81,31 @@ const CategoryManage = () => {
     setFilter(e.target.value);
   }, 500);
   return (
-    <>
+    <div>
       <DashboardHeading
-        title="Categories"
-        desc="Manage your categories"
+        title="All posts"
+        desc="Manage all posts"
       ></DashboardHeading>
       <div className="flex flex-col items-center justify-between mb-10 lg:flex-row">
         <Button
           className="p-5 h-12 max-w-[200px] lg:h-[52px]"
-          to="/manage/add-category"
+          to="/manage/add-post"
           kind="secondary"
         >
-          Create category
+          Create post
         </Button>
         <input
           type="text"
-          placeholder="Search category name..."
+          placeholder="Search post name..."
           className="px-5 py-4 mt-10 border border-gray-300 rounded-lg outline-none lg:mt-0 w-[300px]"
           onChange={handleFilter}
         />
       </div>
-      <CategoryTable data={categoryList}></CategoryTable>
-      {total > categoryList.length && !filter && (
+      <PostTable data={postList}></PostTable>
+      {total > postList.length && !filter && (
         <div>
           <Button
-            onClick={handleLoadMoreCategory}
+            onClick={handleLoadMorePost}
             className="p-5 h-12 max-w-[200px] lg:h-[52px] mx-auto mt-10"
             kind="loadmore"
           >
@@ -113,10 +113,10 @@ const CategoryManage = () => {
           </Button>
         </div>
       )}
-    </>
+    </div>
   );
 };
 
-export default withErrorBoundary(CategoryManage, {
+export default withErrorBoundary(PostManage, {
   FallbackComponent: ErrorComponent,
 });

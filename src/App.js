@@ -13,6 +13,7 @@ const DashboardPage = React.lazy(() => import("pages/DashboardPage"));
 const DashboardLayout = React.lazy(() =>
   import("modules/Dashboard/DashboardLayout")
 );
+const PostManage = React.lazy(() => import("modules/post/PostManage"));
 const PostAddNew = React.lazy(() => import("modules/post/PostAddNew"));
 const CategoryManage = React.lazy(() =>
   import("modules/category/CategoryManage")
@@ -47,6 +48,10 @@ function App() {
               <Route
                 path="/dashboard"
                 element={<DashboardPage></DashboardPage>}
+              ></Route>
+              <Route
+                path="/manage/post"
+                element={<PostManage></PostManage>}
               ></Route>
               <Route
                 path="/manage/add-post"
