@@ -13,7 +13,7 @@ const DashboardLayout = () => {
   return (
     <div className="max-w-[1600px] mx-auto">
       <DashBoardHeader></DashBoardHeader>
-      <div className="grid grid-cols-1 px-5 py-10 lg:grid-cols-dashBoardMain gap-x-10">
+      <div className="grid items-start grid-cols-1 px-5 py-10 lg:grid-cols-dashBoardMain gap-x-10">
         <SideBar></SideBar>
         <div className="flex-1">
           <Outlet></Outlet>

@@ -12,6 +12,7 @@ const Button = ({
   children,
   isLoading = false,
   kind = "primary",
+  onClick = () => {},
   ...rest
 }) => {
   let defaultClassName =
@@ -25,6 +26,9 @@ const Button = ({
       break;
     case "white":
       defaultClassName += " bg-white text-primary";
+      break;
+    case "loadmore":
+      defaultClassName += " border border-primary text-primary";
       break;
     default:
       break;
@@ -45,6 +49,7 @@ const Button = ({
         className,
         !!isLoading ? "opacity-50 pointer-events-none" : ""
       )}
+      onClick={onClick}
       {...rest}
     >
       {child}
@@ -56,8 +61,9 @@ Button.prototype = {
   type: PropTypes.oneOf(["button", "submit"]),
   className: PropTypes.string,
   children: PropTypes.node,
-  kind: PropTypes.oneOf(["primary", "secondary", "white"]),
+  kind: PropTypes.oneOf(["primary", "secondary", "white", "loadmore"]),
   isLoading: PropTypes.bool,
+  onClick: PropTypes.func,
 };
 
 export default withErrorBoundary(Button, {
