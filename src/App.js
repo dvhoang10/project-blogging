@@ -11,7 +11,7 @@ const PostDetailsPage = React.lazy(() =>
 const PageNotFound = React.lazy(() => import("pages/PageNotFound"));
 const DashboardPage = React.lazy(() => import("pages/DashboardPage"));
 const DashboardLayout = React.lazy(() =>
-  import("modules/Dashboard/DashboardLayout")
+  import("modules/dashboard/DashboardLayout")
 );
 const PostManage = React.lazy(() => import("modules/post/PostManage"));
 const PostAddNew = React.lazy(() => import("modules/post/PostAddNew"));

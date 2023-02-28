@@ -1,4 +1,4 @@
-import DashboardHeading from "modules/Dashboard/DashboardHeading";
+import DashboardHeading from "modules/dashboard/DashboardHeading";
 import React, { useEffect } from "react";
 
 const DashboardPage = () => {

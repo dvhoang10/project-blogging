@@ -11,7 +11,7 @@ import {
   where,
 } from "firebase/firestore";
 import { debounce } from "lodash";
-import DashboardHeading from "modules/Dashboard/DashboardHeading";
+import DashboardHeading from "modules/dashboard/DashboardHeading";
 import React, { useEffect, useState } from "react";
 import { withErrorBoundary } from "react-error-boundary";
 import PostTable from "./PostTable";

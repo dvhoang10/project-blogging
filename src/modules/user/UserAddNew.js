@@ -1,11 +1,11 @@
-import DashboardHeading from "modules/Dashboard/DashboardHeading";
+import DashboardHeading from "modules/dashboard/DashboardHeading";
 import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import useFirebaseImage from "hooks/useFirebaseImage";
 import ImageUpload from "components/image/ImageUpload";
-import FormLayout from "modules/Dashboard/FormLayout";
+import FormLayout from "modules/dashboard/FormLayout";
 import Field from "components/field/Field";
 import { Label } from "components/label";
 import Input from "components/input/Input";

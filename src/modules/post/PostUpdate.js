@@ -14,8 +14,8 @@ import {
 } from "firebase/firestore";
 import { db } from "firebase-app/firebase-config";
 import useFirebaseImage from "hooks/useFirebaseImage";
-import DashboardHeading from "modules/Dashboard/DashboardHeading";
-import FormLayout from "modules/Dashboard/FormLayout";
+import DashboardHeading from "modules/dashboard/DashboardHeading";
+import FormLayout from "modules/dashboard/FormLayout";
 import Field from "components/field/Field";
 import { Label } from "components/label";
 import Input from "components/input/Input";
