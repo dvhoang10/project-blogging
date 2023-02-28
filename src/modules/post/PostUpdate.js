@@ -28,8 +28,12 @@ import { Radio } from "components/checkbox";
 import { Button } from "components/button";
 import { toast } from "react-toastify";
 import slugify from "slugify";
-import ReactQuill from "react-quill";
+import axios from "axios";
+import ReactQuill, { Quill } from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import { imgbbAPI } from "config/apiConfig";
+import ImageUploader from "quill-image-uploader";
+Quill.register("modules/imageUploader", ImageUploader);
 
 const schema = yup.object({
   title: yup.string().required("Please enter your title"),
@@ -124,6 +128,35 @@ const PostUpdate = () => {
       });
     }
   }, [errors]);
+  const modules = useMemo(
+    () => ({
+      toolbar: [
+        ["bold", "italic", "underline", "strike"],
+        ["blockquote"],
+        [{ header: 1 }, { header: 2 }],
+        [{ list: "ordered" }, { list: "bullet" }],
+        [{ header: [1, 2, 3, 4, 5, 6, false] }],
+        ["link", "image"],
+      ],
+      imageUploader: {
+        // imgbbAPI
+        upload: async (file) => {
+          const bodyFormData = new FormData();
+          bodyFormData.append("image", file);
+          const response = await axios({
+            method: "post",
+            url: imgbbAPI,
+            data: bodyFormData,
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          });
+          return response.data.data.url;
+        },
+      },
+    }),
+    []
+  );
   const handleUpdatePost = async (values) => {
     if (!isValid) return;
     try {
@@ -154,19 +187,6 @@ const PostUpdate = () => {
       toast.error("Update post unsuccessfully!");
     }
   };
-  const modules = useMemo(
-    () => ({
-      toolbar: [
-        ["bold", "italic", "underline", "strike"],
-        ["blockquote"],
-        [{ header: 1 }, { header: 2 }], // custom button values
-        [{ list: "ordered" }, { list: "bullet" }],
-        [{ header: [1, 2, 3, 4, 5, 6, false] }],
-        ["link", "image"],
-      ],
-    }),
-    []
-  );
   if (!postId) return null;
   return (
     <>
