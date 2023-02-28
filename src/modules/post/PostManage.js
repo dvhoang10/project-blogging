@@ -16,7 +16,7 @@ import React, { useEffect, useState } from "react";
 import { withErrorBoundary } from "react-error-boundary";
 import PostTable from "./PostTable";
 
-const POST_PER_PAGE = 3;
+const POST_PER_PAGE = 5;
 
 const PostManage = () => {
   const [postList, setPostList] = useState([]);

@@ -20,7 +20,7 @@ const PostFeatureItem = ({ data }) => {
       <PostImage
         url={data.image}
         alt=""
-        className="w-full h-full rounded-2xl"
+        className="w-full h-full  rounded-2xl"
       ></PostImage>
       <div className="absolute inset-0 post-overlay rounded-2xl mix-blend-multiply opacity-60 bg-blackOverlay"></div>
       <div className="absolute inset-0 p-5 text-white">

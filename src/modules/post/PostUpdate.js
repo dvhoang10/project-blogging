@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -28,6 +28,8 @@ import { Radio } from "components/checkbox";
 import { Button } from "components/button";
 import { toast } from "react-toastify";
 import slugify from "slugify";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 
 const schema = yup.object({
   title: yup.string().required("Please enter your title"),
@@ -56,6 +58,7 @@ const PostUpdate = () => {
   const imageName = getValues("image_name");
   const [categories, setCategories] = useState([]);
   const [selectCategory, setSelectCategory] = useState("");
+  const [content, setContent] = useState("");
   async function deleteImage() {
     const colRef = doc(db, "users", postId);
     await updateDoc(colRef, {
@@ -104,6 +107,7 @@ const PostUpdate = () => {
       if (docData.data()) {
         reset(docData.data());
         setSelectCategory(docData.data()?.category || "");
+        setContent(docData.data()?.content || "");
       }
     }
     fetchData();
@@ -129,6 +133,7 @@ const PostUpdate = () => {
       await updateDoc(docRef, {
         ...values,
         image,
+        content,
       });
       toast.success("Update post successfully!");
       reset({
@@ -139,6 +144,7 @@ const PostUpdate = () => {
         category: {},
         image: "",
         user: {},
+        content: "",
       });
       setSelectCategory({});
       handleResetUpload();
@@ -148,6 +154,19 @@ const PostUpdate = () => {
       toast.error("Update post unsuccessfully!");
     }
   };
+  const modules = useMemo(
+    () => ({
+      toolbar: [
+        ["bold", "italic", "underline", "strike"],
+        ["blockquote"],
+        [{ header: 1 }, { header: 2 }], // custom button values
+        [{ list: "ordered" }, { list: "bullet" }],
+        [{ header: [1, 2, 3, 4, 5, 6, false] }],
+        ["link", "image"],
+      ],
+    }),
+    []
+  );
   if (!postId) return null;
   return (
     <>
@@ -208,6 +227,19 @@ const PostUpdate = () => {
             )}
           </Field>
         </FormLayout>
+        <div>
+          <Field>
+            <Label>Content</Label>
+            <div className="w-full entry-content">
+              <ReactQuill
+                modules={modules}
+                theme="snow"
+                value={content}
+                onChange={setContent}
+              ></ReactQuill>
+            </div>
+          </Field>
+        </div>
         <FormLayout>
           <Field>
             <Label>Feature post</Label>
