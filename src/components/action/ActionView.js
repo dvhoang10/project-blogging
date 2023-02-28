@@ -5,7 +5,10 @@ import ErrorComponent from "components/common/ErrorComponent";
 
 const ActionView = ({ onClick = () => {} }) => {
   return (
-    <span className="flex items-center justify-center w-10 h-10 border border-gray-200 rounded cursor-pointer">
+    <span
+      className="flex items-center justify-center w-10 h-10 border border-gray-200 rounded cursor-pointer"
+      onClick={onClick}
+    >
       <svg
         xmlns="http://www.w3.org/2000/svg"
         className="w-5 h-5"
