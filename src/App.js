@@ -28,6 +28,7 @@ const UserManage = React.lazy(() => import("modules/user/UserManage"));
 const UserAddNew = React.lazy(() => import("modules/user/UserAddNew"));
 const UserUpdate = React.lazy(() => import("modules/user/UserUpdate"));
 const PostUpdate = React.lazy(() => import("modules/post/PostUpdate"));
+const CategoryPage = React.lazy(() => import("pages/CategoryPage"));
 
 function App() {
   return (
@@ -40,6 +41,10 @@ function App() {
               <Route
                 path="/:slug"
                 element={<PostDetailsPage></PostDetailsPage>}
+              ></Route>
+              <Route
+                path="/category/:slug"
+                element={<CategoryPage></CategoryPage>}
               ></Route>
             </Route>
             <Route path="/register" element={<SignUpPage></SignUpPage>}></Route>

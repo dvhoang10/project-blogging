@@ -4,12 +4,16 @@ import { collection, onSnapshot, query, where } from "firebase/firestore";
 import PageNotFound from "pages/PageNotFound";
 import React, { useEffect, useState } from "react";
 import { withErrorBoundary } from "react-error-boundary";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import PostCategory from "./PostCategory";
 import PostImage from "./PostImage";
 import PostMeta from "./PostMeta";
 import parse from "html-react-parser";
 import slugify from "slugify";
+import { AuthorBox } from "components/author";
+import { useAuth } from "contexts/auth-context";
+import { userRole } from "utils/constant";
+import PostRelated from "./PostRelated";
 
 const PostDetailsPage = () => {
   const { slug } = useParams();
@@ -20,13 +24,18 @@ const PostDetailsPage = () => {
       const colRef = query(collection(db, "posts"), where("slug", "==", slug));
       onSnapshot(colRef, (snapshot) => {
         snapshot.forEach((doc) => {
-          doc.data() && setPostInfo(doc.data());
+          doc.data() &&
+            setPostInfo({
+              id: doc.id,
+              ...doc.data(),
+            });
         });
       });
     }
     fetchData();
   }, [slug]);
   const { user } = postInfo;
+  const { userInfo } = useAuth();
   const date = postInfo?.createdAt?.seconds
     ? new Date(postInfo?.createdAt?.seconds * 1000)
     : new Date();
@@ -53,26 +62,22 @@ const PostDetailsPage = () => {
               authorName={user?.fullname}
               date={formatDate}
             ></PostMeta>
+            {/* if user role is ADMIN then can edit the post */}
+            {userInfo?.role === userRole.ADMIN && (
+              <Link
+                to={`/manage/update-post?id=${postInfo.id}`}
+                className="inline-block px-4 py-2 mt-5 text-sm border border-gray-400 rounded-md"
+              >
+                Edit post
+              </Link>
+            )}
           </div>
         </div>
         <div className="post-content max-w-[700px] my-10 lg:my-[80px] mx-auto">
           <div className="entry-content">{parse(postInfo.content || "")}</div>
-          <div className="flex flex-col lg:flex-row mt-10 mb-10 rounded-[20px] bg-grayF3">
-            <div className="w-[100px] h-[100px] rounded-full mt-5 mx-auto lg:mt-0 lg:w-[200px] lg:h-[200px] shrink-0 lg:rounded-[inherit]">
-              <img
-                src={user?.avatar}
-                alt=""
-                className="w-full h-full object-cover rounded-[inherit]"
-              />
-            </div>
-            <div className="flex-1 p-5 text-center lg:text-left">
-              <h3 className="font-semibold mb-[10px] text-[20px]">
-                {user?.fullname}
-              </h3>
-              <p className="leading-loose">{user?.description}</p>
-            </div>
-          </div>
+          <AuthorBox userId={user.id}></AuthorBox>
         </div>
+        <PostRelated categoryId={postInfo?.category?.id}></PostRelated>
       </div>
     </div>
   );
