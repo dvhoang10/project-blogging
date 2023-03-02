@@ -49,7 +49,7 @@ const PostDetailsPage = () => {
         <div className="flex flex-col items-center gap-10 my-10 lg:flex-row">
           <PostImage
             url={postInfo.image}
-            className="w-full max-w-[640px] h-auto lg:h-[466px] rounded-[20px]"
+            className="w-full max-w-[640px] h-auto lg:h-[466px] rounded-[20px] flex-shrink-0"
           ></PostImage>
           <div>
             <PostCategory className="mb-6" to={postInfo.category?.slug}>

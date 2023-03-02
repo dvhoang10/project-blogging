@@ -1,9 +1,11 @@
 import Button from "components/button/Button";
 import ErrorComponent from "components/common/ErrorComponent";
+import { useAuth } from "contexts/auth-context";
 import React from "react";
 import { withErrorBoundary } from "react-error-boundary";
 
 const HomeBanner = () => {
+  const { userInfo } = useAuth();
   return (
     <div className="min-h-[520px] py-10 bg-homeBanner mb-10 flex items-center justify-between">
       <div className="layout-container">
@@ -13,19 +15,22 @@ const HomeBanner = () => {
               Blogging App
             </h1>
             <p className="mb-6 leading-7 lg:mb-10 lg:text-base">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi.
+              Chào các bạn , đây là blog được xây dựng như công cụ hỗ trợ giúp
+              mọi người chủ động phân tích, tìm hiểu mỹ phẩm và bước đầu là dựa
+              trên thành phần của sản phẩm.
             </p>
-            <Button
-              type="button"
-              to="/"
-              className="w-[120px] lg:w-[200px] h-12 lg:h-[60px]"
-              kind="white"
-            >
-              Get started
-            </Button>
+            {!userInfo ? (
+              <Button
+                type="button"
+                to="/login"
+                className="w-[120px] lg:w-[200px] h-12 lg:h-[60px]"
+                kind="white"
+              >
+                Get started
+              </Button>
+            ) : (
+              <></>
+            )}
           </div>
           <div className="mt-[25px] lg:mt-0">
             <img src="./img-banner.png" alt="" />

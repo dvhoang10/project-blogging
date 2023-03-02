@@ -11,11 +11,11 @@ const menuLinks = [
     title: "Home",
   },
   {
-    url: "/blog",
+    url: "/#",
     title: "Blog",
   },
   {
-    url: "/contact",
+    url: "/#",
     title: "Contact",
   },
 ];
