@@ -74,3 +74,12 @@
     padding: 15px 30px;
   }
 }
+.quill {
+  position: relative;
+  .ql-toolbar {
+    position: sticky;
+    top: 0;
+    background-color: white;
+    z-index: 10;
+  }
+}
