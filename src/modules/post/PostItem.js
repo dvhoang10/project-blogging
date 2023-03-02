@@ -15,7 +15,7 @@ const PostItem = ({ data }) => {
     : new Date();
   const formatDate = new Date(date).toLocaleDateString("vi-VI");
   return (
-    <div className="flex flex-col items-start">
+    <div className="flex flex-col items-start min-h-[280px]">
       <PostImage
         url={data.image}
         alt=""
@@ -25,10 +25,11 @@ const PostItem = ({ data }) => {
       <PostCategory to={data.category?.slug} className="mb-[10px]">
         {data.category?.name}
       </PostCategory>
-      <PostTitle to={data?.slug} className="mb-5">
-        {data.title}
+      <PostTitle className="mb-5 line-clamp-2" to={data?.slug}>
+        {data?.title}
       </PostTitle>
       <PostMeta
+        className="mt-auto"
         to={slugify(data.user?.username || "", { lower: true })}
         authorName={data.user?.fullname}
         date={formatDate}

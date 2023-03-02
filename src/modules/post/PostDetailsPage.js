@@ -42,6 +42,7 @@ const PostDetailsPage = () => {
   const formatDate = new Date(date).toLocaleDateString("vi-VI");
   if (!slug) return <PageNotFound></PageNotFound>;
   if (!postInfo.title) return null;
+  console.log(postInfo.category.id);
   return (
     <div className="pb-10">
       <div className="layout-container">
