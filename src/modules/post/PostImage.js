@@ -8,7 +8,7 @@ const PostImage = ({ className = "", url = "", alt = "", to = "" }) => {
   const defaultClassName = "object-cover w-full h-full rounded-[inherit]";
   if (to) {
     return (
-      <Link to={to} className="block">
+      <Link to={`/${to}`} className="block">
         <div className={className}>
           <img
             src={url}
