@@ -12,12 +12,11 @@ const HomeBanner = () => {
         <div className="flex flex-col items-center justify-between lg:flex-row">
           <div className="max-w-[600px] text-white">
             <h1 className="mb-3 text-3xl font-bold lg:mb-5 lg:text-4xl">
-              Blogging App
+              Discover and share the world’s best photos
             </h1>
             <p className="mb-6 leading-7 lg:mb-10 lg:text-base">
-              Chào các bạn , đây là blog được xây dựng như công cụ hỗ trợ giúp
-              mọi người chủ động phân tích, tìm hiểu mỹ phẩm và bước đầu là dựa
-              trên thành phần của sản phẩm.
+              Get inspired with incredible photos from diverse styles and genres
+              around the world. We're not guided by fads—just great photography.
             </p>
             {!userInfo ? (
               <Button
@@ -26,7 +25,7 @@ const HomeBanner = () => {
                 className="w-[120px] lg:w-[200px] h-12 lg:h-[60px]"
                 kind="white"
               >
-                Get started
+                Sign up
               </Button>
             ) : (
               <></>
